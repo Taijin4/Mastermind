@@ -1,11 +1,80 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-autonumber
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+hide interface attributes
+class MastermindModel {
+    + genererCombinaisonSecrete(): Combinaison
+    + genererIndicePourCombinaison(secrete: Combinaison, devinee: Combinaison): Indice
+    + verifierVictoire(secrete: Combinaison, devinee: Combinaison): boolean
+    + verifierDefaite(essais: int): boolean
+    + getScore(): int
+}
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+class Combinaison {
+    - couleurs: Couleur[]
+    + Combinaison(couleurs: Couleur[])
+    + getCouleurALaPosition(position: int): Couleur
+}
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+enum Couleur <<enum>>{
+    BLEU
+    ROUGE
+    VERT
+    JAUNE
+    ORANGE
+    VIOLET
+    ROSE
+    GRIS
+}
+
+class Indice {
+    - positionCorrecte: int
+    - couleurCorrecte: int
+    + Indice(positionCorrecte: int, couleurCorrecte: int)
+    + getPositionCorrecte(): int
+    + getCouleurCorrecte(): int
+}
+
+interface MastermindView {
+    + afficherEcranDeDepart(): void
+    + afficherEcranDeJeu(): void
+    + afficherEcranDeFin(score: int, estVictoire: boolean): void
+    + selectionnerCouleursPourCombinaison(): Combinaison
+    + afficherRetroaction(indice: Indice): void
+    + reinitialiserCombinaison(): void
+}
+
+class MastermindSwingView {
+    - ecranDeDepart: JFrame
+    - ecranDeJeu: JFrame
+    - ecranDeFin: JFrame
+    + MastermindSwingView()
+    + afficherEcranDeDepart(): void
+    + afficherEcranDeJeu(): void
+    + afficherEcranDeFin(score: int, estVictoire: boolean): void
+    + selectionnerCouleursPourCombinaison(): Combinaison
+    + afficherRetroaction(indice: Indice): void
+    + reinitialiserCombinaison(): void
+}
+
+class MastermindController {
+    - modele: MastermindModel
+    - vue: MastermindView
+    + MastermindController(modele: MastermindModel, vue: MastermindView)
+    + demarrerPartie(): void
+    + faireDevine(combinaison: Combinaison): void
+    + reinitialiserPartie(): void
+}
+
+MastermindModel ..> Combinaison
+MastermindModel ..> Indice
+MastermindModel --> MastermindView
+MastermindView <|-- MastermindSwingView
+MastermindController --> MastermindModel
+MastermindController --> MastermindView
+Combinaison o--> Couleur : utilise
+
 @enduml
