@@ -1,2 +1,3 @@
 public enum Couleur {
+    BLEU,ROUGE,VERT,JAUNE,ORANGE,VIOLET,ROSE,GRIS
 }

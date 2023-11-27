@@ -5,6 +5,7 @@ skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 hide enum methods
 hide interface attributes
+
 class MastermindModel {
     + genererCombinaisonSecrete(): Combinaison
     + genererIndicePourCombinaison(secrete: Combinaison, devinee: Combinaison): Indice
