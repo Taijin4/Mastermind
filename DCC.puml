@@ -7,75 +7,75 @@ hide enum methods
 hide interface attributes
 
 class MastermindModel {
-    + genererCombinaisonSecrete(): Combinaison
-    + genererIndicePourCombinaison(secrete: Combinaison, devinee: Combinaison): Indice
-    + verifierVictoire(secrete: Combinaison, devinee: Combinaison): boolean
-    + verifierDefaite(essais: int): boolean
+    + generateSecreteCombination(): Combination
+    + generateCombinationHint(secret: Combination, guess: Combination): Hint
+    + verifyVictory(secret: Combination, guess: Combination): boolean
+    + verifyLoose(nbTrys: int): boolean
     + getScore(): int
 }
 
-class Combinaison {
-    - couleurs: Couleur[]
-    + Combinaison(couleurs: Couleur[])
-    + getCouleurALaPosition(position: int): Couleur
+class Combination {
+    - colors: Color[]
+    + Combination(colors: Color[])
+    + getColorAtPosition(position: int): Color
 }
 
-enum Couleur <<enum>>{
-    BLEU
-    ROUGE
-    VERT
-    JAUNE
+enum Color <<enum>>{
+    BLUE
+    RED
+    GREEN
+    YELLOW
     ORANGE
-    VIOLET
-    ROSE
-    GRIS
+    PURPLE
+    PINK
+    GREY
 }
 
-class Indice {
-    - positionCorrecte: int
-    - couleurCorrecte: int
-    + Indice(positionCorrecte: int, couleurCorrecte: int)
-    + getPositionCorrecte(): int
-    + getCouleurCorrecte(): int
+class Hint {
+    - correctPositions: int
+    - correctColors: int
+    + Hint(correctPositions: int, correctColors: int)
+    + getCorrectPositions(): int
+    + getCorrectColors(): int
 }
 
 interface MastermindView {
-    + afficherEcranDeDepart(): void
-    + afficherEcranDeJeu(): void
-    + afficherEcranDeFin(score: int, estVictoire: boolean): void
-    + selectionnerCouleursPourCombinaison(): Combinaison
-    + afficherRetroaction(indice: Indice): void
-    + reinitialiserCombinaison(): void
+    + showStartScreen(): void
+    + showGameScreen(): void
+    + showEndScreen(score: int, isWin: boolean): void
+    + selectColorsForCombination(): Combination
+    + showHints(indice: Indice): void
+    + resetCombination(): void
 }
 
-class MastermindSwingView {
-    - ecranDeDepart: JFrame
-    - ecranDeJeu: JFrame
-    - ecranDeFin: JFrame
+class MastermindSwingView extends MastermindView{
+    - startScreen: JFrame
+    - gameScreen: JFrame
+    - endScreen: JFrame
     + MastermindSwingView()
-    + afficherEcranDeDepart(): void
-    + afficherEcranDeJeu(): void
-    + afficherEcranDeFin(score: int, estVictoire: boolean): void
-    + selectionnerCouleursPourCombinaison(): Combinaison
-    + afficherRetroaction(indice: Indice): void
-    + reinitialiserCombinaison(): void
+    + showStartScreen(): void
+    + showGameScreen(): void
+    + showEndScreen(score: int, isWin: boolean): void
+    + selectColorsForCombination(): Combination
+    + showHints(indice: Indice): void
+    + resetCombination(): void
 }
 
 class MastermindController {
     - modele: MastermindModel
     - vue: MastermindView
     + MastermindController(modele: MastermindModel, vue: MastermindView)
-    + demarrerPartie(): void
-    + faireDevine(combinaison: Combinaison): void
-    + reinitialiserPartie(): void
+    + startGame(): void
+    + makeGuess(combinaison: Combinaison): void
+    + resetGame(): void
 }
 
-MastermindModel ..> Combinaison
-MastermindModel ..> Indice
+MastermindModel ..> Combination
+MastermindModel ..> Hint
 MastermindModel --> MastermindView
 MastermindView <|-- MastermindSwingView
 MastermindController --> MastermindModel
 MastermindController --> MastermindView
-Combinaison o--> Couleur : utilise
+Combination o--> Color : utilise
 
 @enduml
