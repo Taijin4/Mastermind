@@ -7,17 +7,30 @@ hide enum methods
 hide interface attributes
 
 class MastermindModel {
+    - secret : Combination
+    - guess : Combination
+    - roundScore : int
     + generateSecreteCombination(): Combination
     + generateCombinationHint(secret: Combination, guess: Combination): Hint
     + verifyVictory(secret: Combination, guess: Combination): boolean
     + verifyLoose(nbTrys: int): boolean
     + getScore(): int
+    + setScore(): int
+    + verifyColors(secret : Combination, guess : Combination) : int
+    + verifyPositions(secret : Combination, guess : Combination) : int
+    + setGuess(guess : Combination) : void
 }
 
 class Combination {
     - colors: Color[]
     + Combination(colors: Color[])
     + getColorAtPosition(position: int): Color
+}
+
+interface MasterMindObserver <<interface>>{
+    + updatePositions(Hint : int)
+    + updateColors(color : int)
+    +
 }
 
 enum Color <<enum>>{
@@ -29,6 +42,10 @@ enum Color <<enum>>{
     PURPLE
     PINK
     GREY
+}
+
+class HintObserver{
+
 }
 
 class Hint {
@@ -44,6 +61,7 @@ interface MastermindView {
     + showGameScreen(): void
     + showEndScreen(score: int, isWin: boolean): void
     + selectColorsForCombination(): Combination
+    + validateCombination() : Combination
     + showHints(indice: Indice): void
     + resetCombination(): void
 }
@@ -64,8 +82,10 @@ class MastermindSwingView extends MastermindView{
 class MastermindController {
     - modele: MastermindModel
     - vue: MastermindView
+    - gameScore : int
     + MastermindController(modele: MastermindModel, vue: MastermindView)
-    + startGame(): void
+    + startGame(rounds : int): void
+    + startRound() : int
     + makeGuess(combinaison: Combinaison): void
     + resetGame(): void
 }
