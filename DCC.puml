@@ -10,7 +10,7 @@ class MastermindModel {
     - secret : Combination
     - guess : Combination
     - roundScore : int
-    + generateSecreteCombination(): Combination
+    + generateSecretCombination(): Combination
     + generateCombinationHint(secret: Combination, guess: Combination): Hint
     + verifyVictory(secret: Combination, guess: Combination): boolean
     + verifyLoose(nbTrys: int): boolean
