@@ -12,4 +12,12 @@ public class Combination {
         return colors.get(position);
     }
 
+    public void setColorAtPosition(Color color, int position) {
+        colors.set(position, color);
+    }
+
+    public boolean hasColor(Combination secret, Color color) {
+        if (colors.contains(color) && )
+    }
+
 }
