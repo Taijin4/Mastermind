@@ -16,8 +16,8 @@ public class Combination {
         colors.set(position, color);
     }
 
-    public boolean hasColor(Combination secret, Color color) {
-        if (colors.contains(color) && )
+    public boolean containsColor(Color color){
+        return colors.contains(color);
     }
 
     public int size() {
