@@ -15,20 +15,29 @@ public class MastermindModel {
         return secret;
     }
 
-    public Hint generateCombinationHint(){
-        int correctColors=0;
-        int correctPositions=0;
-        for(int i = 0; i < nbColor; i++){
-            if(secret.getColorAtPosition(i)==guess.getColorAtPosition(i)){
-                correctPositions++;
-            }
-            if(secret.get)
+public Hint generateCombinationHint(int nbColor){
+    int correctColors=0;
+    int correctPositions=0;
+
+    Combination copyGuess = guess;
+
+    for(int i = 0; i < copyGuess.size(); i++){
+        if(secret.getColorAtPosition(i)==guess.getColorAtPosition(i)) {
+            correctPositions++;
+            copyGuess.removeAtPosition(i);
         }
-
-        Hint hint = new Hint();
-
-        return hint;
     }
+    for(int j = 0 ; j < copyGuess.size() ; j++){
+        if(secret.containsColor(guess.getColorAtPosition(j))){
+            correctColors++;
+            //Potentiellement rajouter un remove si ca marche pas
+        }
+    }
+
+    Hint hint = new Hint(correctPositions, correctColors);
+
+    return hint;
+}
 
 
 }

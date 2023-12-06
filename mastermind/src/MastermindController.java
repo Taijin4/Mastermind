@@ -4,7 +4,7 @@ public class MastermindController {
     // private MastermindView view;
     private int gameScore;
     private int nbColors;
-    public MastermindController(MastermindModel model, MastermindView view) {
+    public MastermindController(MastermindModel model) {
         this.model = model;
         //this.view = view;
     }
