@@ -28,4 +28,12 @@ public class Combination {
         colors.remove(i);
     }
 
+    public void printCombination() {
+        String answer = "";
+        for (int i = 0; i < colors.size(); i++) {
+            answer += colors.get(i) + " - ";
+        }
+        answer.substring(answer.length()-1);
+    }
+
 }
