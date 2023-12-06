@@ -20,4 +20,12 @@ public class Combination {
         if (colors.contains(color) && )
     }
 
+    public int size() {
+        return colors.size();
+    }
+
+    public void removeAtPosition(int i) {
+        colors.remove(i);
+    }
+
 }
