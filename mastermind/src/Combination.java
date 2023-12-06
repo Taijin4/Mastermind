@@ -16,6 +16,10 @@ public class Combination {
         colors.set(position, color);
     }
 
+    public void addCombination(Color color) {
+        colors.add(color);
+    }
+
     public boolean containsColor(Color color){
         return colors.contains(color);
     }
