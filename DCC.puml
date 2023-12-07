@@ -10,7 +10,7 @@ package Model {
 
     class MastermindGame {
         - roundScore : Integer
-        + <<create>> MastermindGame(nbColors : Integer) : Integer
+        + <<create>> MastermindGame(nbColors : Integer)
         + verifyVictory(secret: Combination, guess: Combination): Boolean
         + verifyLoose(nbTrys: Integer): Boolean
         + getScore(): Integer
@@ -26,9 +26,7 @@ package Model {
     }
 
     class Hint {
-        - correctPositions: Integer
-        - correctColors: Integer
-        + <<create>> Hint(correctPositions: Integer, correctColors: Integer)
+        + <<create>> Hint() : HintSuccess[*]
         + generateCombinationHint(guess: Combination): Hint
         + verifyColors(secret : Combination, guess : Combination) : Integer
         + verifyPositions(secret : Combination, guess : Combination) : Integer
@@ -104,5 +102,5 @@ MastermindGame --> Combination : possède
 MastermindController -->  Model : use
 MastermindController --> MastermindView : possède
 Combination " *   " o---> "*\n-color" Colors : Possède >
-
+Hint --> HintSuccess : possède >
 @enduml
