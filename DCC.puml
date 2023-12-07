@@ -6,96 +6,97 @@ skinparam classFontStyle Bold
 hide enum methods
 hide interface attributes
 
-class MastermindModel {
-    - secret : Combination
-    - guess : Combination
-    - roundScore : int
-    + generateSecreteCombination(nbColors : int): Combination
-    + generateCombinationHint(guess: Combination): Hint
-    + verifyVictory(secret: Combination, guess: Combination): boolean
-    + verifyLoose(nbTrys: int): boolean
-    + getScore(): int
-    + setScore(): int
-    + verifyColors(secret : Combination, guess : Combination) : int
-    + verifyPositions(secret : Combination, guess : Combination) : int
-    + setGuess(guess : Combination) : void
+package Model {
+
+    class MastermindGame {
+        - roundScore : Integer
+        + <<create>> MastermindGame(nbColors : Integer) : Integer
+        + verifyVictory(secret: Combination, guess: Combination): Boolean
+        + verifyLoose(nbTrys: Integer): Boolean
+        + getScore(): Integer
+        + setScore(): Integer
+        + setGuess(guess : Combination)
+    }
+
+    class Combination {
+        - colors: Color[]
+        + <<create>> Combination(colors: Color[])
+        + generateSecreteCombination(nbColors : Integer): Combination
+        + getColorAtPosition(position: Integer): Color
+    }
+
+    class Hint {
+        - correctPositions: Integer
+        - correctColors: Integer
+        + <<create>> Hint(correctPositions: Integer, correctColors: Integer)
+        + generateCombinationHint(guess: Combination): Hint
+        + verifyColors(secret : Combination, guess : Combination) : Integer
+        + verifyPositions(secret : Combination, guess : Combination) : Integer
+        + getCorrectPositions(): Integer
+        + getCorrectColors(): Integer
+    }
+
+    enum Colors <<enum>>{
+        BLUE
+        RED
+        GREEN
+        YELLOW
+        ORANGE
+        PURPLE
+        PINK
+        GREY
+    }
+
+    interface MasterMindObserver <<interface>>{
+        + updatePositions(Hint : hint)
+        + updateColors(color : Integer)
+    }
+
 }
 
-class Combination {
-    - colors: Color[]
-    + Combination(colors: Color[])
-    + getColorAtPosition(position: int): Color
+
+package View {
+
+    interface MastermindView {
+        + <<create>> MastermindView()
+        + showStartScreen()
+        + showGameScreen()
+        + showEndScreen(score: Integer, isWin: Boolean)
+        + selectColorsForCombination(): Combination
+        + validateCombination() : Combination
+        + showHints(indice: Hint)
+        + resetCombination()
+    }
+
+    class MastermindSwingView extends MastermindView{
+        + <<create>> MastermindSwingView()
+        + showStartScreen()
+        + showGameScreen()
+        + showEndScreen(score: Integer, isWin: boolean)
+        + selectColorsForCombination(): Combination
+        + showHints(indice: Hint)
+        + resetCombination()
+    }
+
 }
 
-interface MasterMindObserver <<interface>>{
-    + updatePositions(Hint : int)
-    + updateColors(color : int)
-    +
-}
+package Controller {
 
-enum Color <<enum>>{
-    BLUE
-    RED
-    GREEN
-    YELLOW
-    ORANGE
-    PURPLE
-    PINK
-    GREY
-}
-
-class HintObserver{
+    class MastermindController {
+        - gameScore : Integer
+        + <<create>> MastermindController(game: MastermindGame, vue: MastermindView)
+        + startGame(nbRounds : Integer)
+        + startRound() : Integer
+        + makeGuess(combinaison: Combinaison)
+        + resetGame()
+    }
 
 }
 
-class Hint {
-    - correctPositions: int
-    - correctColors: int
-    + Hint(correctPositions: int, correctColors: int)
-    + getCorrectPositions(): int
-    + getCorrectColors(): int
-}
-
-interface MastermindView {
-    + showStartScreen(): void
-    + showGameScreen(): void
-    + showEndScreen(score: int, isWin: boolean): void
-    + selectColorsForCombination(): Combination
-    + validateCombination() : Combination
-    + showHints(indice: Indice): void
-    + resetCombination(): void
-}
-
-class MastermindSwingView extends MastermindView{
-    - startScreen: JFrame
-    - gameScreen: JFrame
-    - endScreen: JFrame
-    + MastermindSwingView()
-    + showStartScreen(): void
-    + showGameScreen(): void
-    + showEndScreen(score: int, isWin: boolean): void
-    + selectColorsForCombination(): Combination
-    + showHints(indice: Indice): void
-    + resetCombination(): void
-}
-
-class MastermindController {
-    - modele: MastermindModel
-    - vue: MastermindView
-    - gameScore : int
-    + MastermindController(modele: MastermindModel, vue: MastermindView)
-    + startGame(nbRounds : int): void
-    + startRound() : int
-    + makeGuess(combinaison: Combinaison): void
-    + resetGame(): void
-}
-
-MastermindModel ..> Combination
-MastermindModel ..> Hint
-MastermindModel --> MastermindView
-MastermindView <|-- MastermindSwingView
-MastermindController --> MastermindModel
-MastermindController --> MastermindView
-Combination o--> Color : utilise
+MastermindGame ..> Hint : use
+MastermindGame --> Combination : possède
+MastermindController -->  Model : use
+MastermindController --> MastermindView : possède
+Combination " *   " o---> "*\n-color" Colors : Possède >
 
 @enduml

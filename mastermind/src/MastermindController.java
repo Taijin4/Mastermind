@@ -1,10 +1,10 @@
 public class MastermindController {
 
-    private MastermindModel model;
+    private MastermindGame model;
     // private MastermindView view;
     private int gameScore;
     private int nbColors;
-    public MastermindController(MastermindModel model) {
+    public MastermindController(MastermindGame model) {
         this.model = model;
         //this.view = view;
     }

@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class MastermindModel {
+public class MastermindGame {
     private Combination secret;
     private Combination guess;
     private int roundScore;
