@@ -6,8 +6,12 @@ public class MastermindGame {
     private Combination secret;
     private Combination guess;
     private int roundScore;
+    private int nbColor;
 
-    public Combination generateSecretCombination(int nbColor){
+    public MastermindGame(int nbColor) {
+        this.nbColor = nbColor;
+    }
+    public Combination generateSecretCombination(){
         Random random = new Random();
         Color couleurAleatoire;
         for(int i = 0; i < nbColor; i++) {
@@ -17,7 +21,7 @@ public class MastermindGame {
         return secret;
     }
 
-    public Hint generateCombinationHint(int nbColor){
+    public Hint generateCombinationHint(){
         int correctColors=0;
         int correctPositions=0;
 
@@ -39,6 +43,10 @@ public class MastermindGame {
         Hint hint = new Hint(correctPositions, correctColors);
 
         return hint;
+    }
+
+    public void submitCombination(Combination guess) {
+        this.guess = guess;
     }
 
 

@@ -5,10 +5,10 @@ import Model.MastermindGame;
 public class Main {
 
     public static void main(String[] args) {
-        MastermindGame model = new MastermindGame();
-        Combination secret = Combination.generateSecretCombination(6);
+        MastermindGame game = new MastermindGame(6);
+        Combination secret =
         Combination gamer = new Combination(ArrayList< Color >())
-        MastermindGame.submitCombination(gamer);
+        game.submitCombination(gamer);
         Hint hint = Hint.generateCombinationHint(secret, gamer);
         Hint.showHint(hint);
     }

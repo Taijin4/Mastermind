@@ -51,10 +51,16 @@ package Model {
     }
 
     enum HintSuccess <<enum>>{
-        RightPositionAndColor
-        RightColor
-        False
+        RIGHTPOSITIONANDCOLOR
+        RIGHTCOLOR
+        FALSE
     }
+
+    interface GameStrategy <<interface>> {
+
+    }
+
+
 
 }
 
