@@ -17,9 +17,11 @@ public class MastermindController {
     }
 
     public int startRound(int nbColors) {
+        Combination testCombination = model.generateSecretCombination(nbColors);
+        testCombination.printCombination();
+        gameScore = model.getRoundScore() * nbColors;
 
-
-        return 0;
+        return gameScore;
     }
 
 }

@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Combination {
+
+    private Combination secret ;
 
     ArrayList<Color> colors;
 
@@ -40,4 +43,13 @@ public class Combination {
         answer.substring(answer.length()-1);
     }
 
+    public Combination generateSecretCombination(int nbColor){
+        Random random = new Random();
+        ArrayList<Color> tempColors;
+        Color couleurAleatoire;
+        for(int i = 0; i < nbColor; i++) {
+            couleurAleatoire = Color.values()[random.nextInt(Color.values().length)];
+        }
+        return secret;
+    }
 }
