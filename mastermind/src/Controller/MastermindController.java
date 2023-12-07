@@ -1,3 +1,8 @@
+package Controller;
+
+import Model.Combination;
+import Model.MastermindGame;
+
 public class MastermindController {
 
     private MastermindGame model;

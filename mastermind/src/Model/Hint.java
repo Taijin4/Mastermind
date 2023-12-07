@@ -1,3 +1,5 @@
+package Model;
+
 public class Hint {
     private int correctPositions;
     private int correctColors;

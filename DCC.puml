@@ -52,6 +52,12 @@ package Model {
         + updateColors(color : Integer)
     }
 
+    enum HintSuccess <<enum>>{
+        RightPositionAndColor
+        RightColor
+        False
+    }
+
 }
 
 

@@ -8,11 +8,11 @@ Ce rapport de conception présente les choix de conception que nous avons faits 
 
 ## Modèle
 
-Le modèle de l'application est représenté par la classe `MastermindGame`. Cette classe gère la logique du jeu, y compris la génération de la combinaison secrète, la génération des indices associés à une combinaison proposée par le joueur, la vérification de la victoire ou de la défaite du joueur, la gestion des manches et des parties, ainsi que le calcul du score.
+Le modèle de l'application est représenté par la classe `Model.MastermindGame`. Cette classe gère la logique du jeu, y compris la génération de la combinaison secrète, la génération des indices associés à une combinaison proposée par le joueur, la vérification de la victoire ou de la défaite du joueur, la gestion des manches et des parties, ainsi que le calcul du score.
 
-Nous avons choisi de représenter la combinaison secrète et les combinaisons tentées par le joueur à l'aide de la classe `Combination`. Chaque combinaison est composée d'une liste de couleurs, représentée par l'énumération `Color`. Cette approche nous permet de gérer facilement les différents éléments du jeu, tels que les couleurs, les indices et les tentatives.
+Nous avons choisi de représenter la combinaison secrète et les combinaisons tentées par le joueur à l'aide de la classe `Model.Combination`. Chaque combinaison est composée d'une liste de couleurs, représentée par l'énumération `Model.Color`. Cette approche nous permet de gérer facilement les différents éléments du jeu, tels que les couleurs, les indices et les tentatives.
 
-La classe `Hint` est utilisée pour stocker les indices associés à une combinaison proposée par le joueur. Elle contient le nombre de pions correctement placés (`correctPositions`) et le nombre de pions corrects mais mal placés (`correctColors`). Ces informations sont essentielles pour aider le joueur à déduire la combinaison secrète.
+La classe `Model.Hint` est utilisée pour stocker les indices associés à une combinaison proposée par le joueur. Elle contient le nombre de pions correctement placés (`correctPositions`) et le nombre de pions corrects mais mal placés (`correctColors`). Ces informations sont essentielles pour aider le joueur à déduire la combinaison secrète.
 
 ## Vue
 
@@ -20,13 +20,13 @@ L'interface utilisateur de l'application est gérée par les classes de la vue. 
 
 ## Contrôleur
 
-Le contrôleur de l'application est représenté par la classe `MastermindController`. Cette classe est responsable de la communication entre le modèle (`MastermindGame`) et la vue (`MastermindView`). Elle gère le démarrage du jeu, le déroulement des manches, la validation des combinaisons proposées par le joueur, le calcul du score et la réinitialisation du jeu.
+Le contrôleur de l'application est représenté par la classe `Controller.MastermindController`. Cette classe est responsable de la communication entre le modèle (`Model.MastermindGame`) et la vue (`MastermindView`). Elle gère le démarrage du jeu, le déroulement des manches, la validation des combinaisons proposées par le joueur, le calcul du score et la réinitialisation du jeu.
 
 ## Choix de Conception
 
 1. **Modèle-Vue-Contrôleur (MVC)** : Nous avons choisi d'adopter l'architecture MVC pour assurer une séparation claire des responsabilités dans notre application. Le modèle gère la logique du jeu, la vue gère l'interface utilisateur, et le contrôleur assure la coordination entre les deux.
 
-2. **Utilisation de Classes pour Représenter les Combinaisons** : En utilisant la classe `Combination`, nous avons créé une structure claire pour stocker les combinaisons de couleurs. Cela facilite la manipulation des combinaisons secrètes, des tentatives du joueur et des indices.
+2. **Utilisation de Classes pour Représenter les Combinaisons** : En utilisant la classe `Model.Combination`, nous avons créé une structure claire pour stocker les combinaisons de couleurs. Cela facilite la manipulation des combinaisons secrètes, des tentatives du joueur et des indices.
 
 3. **Utilisation d'une Interface pour la Vue** : En définissant l'interface `MastermindView`, nous assurons une flexibilité dans l'implémentation de différentes vues. La classe `MastermindSwingView` implémente cette interface pour créer une interface graphique en Swing, mais d'autres implémentations pourraient être envisagées.
 
