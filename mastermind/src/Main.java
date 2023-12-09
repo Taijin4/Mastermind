@@ -1,15 +1,32 @@
+import Model.Color;
 import Model.Combination;
 import Model.Hint;
 import Model.MastermindGame;
+
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
         MastermindGame game = new MastermindGame(6);
-        Combination secret =
-        Combination gamer = new Combination(ArrayList< Color >())
-        game.submitCombination(gamer);
-        Hint hint = Hint.generateCombinationHint(secret, gamer);
-        Hint.showHint(hint);
+        Combination secret = new Combination();
+        secret.generateSecretCombination(6);
+        secret.printCombination();
+        game.setSecret(secret);
+
+        ArrayList<Color> playerColors = new ArrayList<>();
+        playerColors.add(Color.GREEN);
+        playerColors.add(Color.YELLOW);
+        playerColors.add(Color.ORANGE);
+        playerColors.add(Color.RED);
+        playerColors.add(Color.PINK);
+        playerColors.add(Color.GREEN);
+
+        Combination joueur = new Combination(playerColors);
+        joueur.printCombination();
+        game.submitCombination(joueur);
+
+
+
     }
 }

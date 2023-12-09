@@ -5,12 +5,14 @@ import java.util.Random;
 
 public class Combination {
 
-    private Combination secret ;
 
     ArrayList<Color> colors;
 
     public Combination(ArrayList<Color> couleurs) {
         this.colors = couleurs;
+    }
+    public Combination() {
+
     }
 
     public Color getColorAtPosition(int position) {
@@ -38,20 +40,22 @@ public class Combination {
     }
 
     public void printCombination() {
+
         String answer = "";
         for (int i = 0; i < colors.size(); i++) {
             answer += colors.get(i) + " - ";
         }
-        answer.substring(answer.length()-1);
+        System.out.println(answer);
     }
 
-    public Combination generateSecretCombination(int nbColor){
+    public void generateSecretCombination(int nbColor){
         Random random = new Random();
-        ArrayList<Color> tempColors;
+        ArrayList<Color> tempColors = new ArrayList<>();
         Color couleurAleatoire;
         for(int i = 0; i < nbColor; i++) {
             couleurAleatoire = Color.values()[random.nextInt(Color.values().length)];
+            tempColors.add(couleurAleatoire);
         }
-        return secret;
+        this.colors = tempColors;
     }
 }
