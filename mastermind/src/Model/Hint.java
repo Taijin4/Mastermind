@@ -1,14 +1,20 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Hint {
     private int correctPositions;
     private int correctColors;
+    private ArrayList<HintSuccess> hint = new ArrayList<>();
 
-    private Combination secret;
     
     public Hint(int positionCorrecte, int couleurCorrecte){
         this.correctPositions = positionCorrecte;
         this.correctColors = couleurCorrecte;
+    }
+
+    public Hint() {
+
     }
 
     public int getCorrectPositions(){
@@ -19,7 +25,7 @@ public class Hint {
         return this.correctColors;
     }
 
-    public Hint generateCombinationHint(int nbColor){
+    public Hint generateCombinationHint(Combination guess, Combination secret){
         int correctColors=0;
         int correctPositions=0;
 

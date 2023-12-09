@@ -15,7 +15,7 @@ package Model {
         + verifyLoose(nbTrys: Integer): Boolean
         + getScore(): Integer
         + setScore(): Integer
-        + setGuess(guess : Combination)
+        + submitPlayerCombination(guess : Combination)
     }
 
     class Combination {
