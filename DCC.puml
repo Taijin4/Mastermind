@@ -1,5 +1,4 @@
 @startuml
-
 skinparam style strictuml
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
@@ -9,13 +8,16 @@ hide interface attributes
 package Model {
 
     class MastermindGame {
+        - secretCombination : Combination
+        - currentAttempts : Integer
         - roundScore : Integer
         + <<create>> MastermindGame(nbColors : Integer)
-        + verifyVictory(secret: Combination, guess: Combination): Boolean
-        + verifyLoose(nbTrys: Integer): Boolean
+        + verifyVictory(): Boolean
+        + verifyLoose(): Boolean
         + getScore(): Integer
-        + setScore(): Integer
+        + setScore(score : Integer)
         + submitPlayerCombination(guess : Combination)
+        + getCurrentAttempt(): Integer
     }
 
     class Combination {
@@ -26,65 +28,52 @@ package Model {
     }
 
     class Hint {
-        + <<create>> Hint() : HintSuccess[*]
-        + generateCombinationHint(guess: Combination): Hint
-        + verifyColors(secret : Combination, guess : Combination) : Integer
-        + verifyPositions(secret : Combination, guess : Combination) : Integer
+        + <<create>> Hint()
+        + generateCombinationHint(secret: Combination, guess: Combination): Hint
+        + verifyColors(): Integer
+        + verifyPositions(): Integer
         + getCorrectPositions(): Integer
         + getCorrectColors(): Integer
     }
 
-    enum Colors <<enum>>{
-        BLUE
-        RED
-        GREEN
-        YELLOW
-        ORANGE
-        PURPLE
-        PINK
-        GREY
+    enum Colors <<enum>> {
+        BLUE, RED, GREEN, YELLOW, ORANGE, PURPLE, PINK, GREY
     }
 
-    interface MasterMindObserver <<interface>>{
-        + updatePositions(Hint : hint)
+    enum HintSuccess <<enum>> {
+        RIGHTPOSITIONANDCOLOR, RIGHTCOLOR, FALSE
+    }
+
+    interface MasterMindObserver <<interface>> {
+        + updatePositions(hint : Hint)
         + updateColors(color : Integer)
     }
 
-    enum HintSuccess <<enum>>{
-        RIGHTPOSITIONANDCOLOR
-        RIGHTCOLOR
-        FALSE
-    }
-
     interface GameStrategy <<interface>> {
-
+        + executeStrategy(game : MastermindGame): void
     }
-
-
 
 }
-
 
 package View {
 
     interface MastermindView {
-        + <<create>> MastermindView()
         + showStartScreen()
         + showGameScreen()
         + showEndScreen(score: Integer, isWin: Boolean)
         + selectColorsForCombination(): Combination
         + validateCombination() : Combination
-        + showHints(indice: Hint)
+        + showHints(hint: Hint)
         + resetCombination()
     }
 
-    class MastermindSwingView extends MastermindView{
-        + <<create>> MastermindSwingView()
+    class MastermindSwingView implements MastermindView {
         + showStartScreen()
         + showGameScreen()
-        + showEndScreen(score: Integer, isWin: boolean)
+        + showEndScreen(score: Integer, isWin: Boolean)
         + selectColorsForCombination(): Combination
-        + showHints(indice: Hint)
+        + validateCombination() : Combination
+        + showHints(hint: Hint)
         + resetCombination()
     }
 
@@ -93,20 +82,22 @@ package View {
 package Controller {
 
     class MastermindController {
-        - gameScore : Integer
-        + <<create>> MastermindController(game: MastermindGame, vue: MastermindView)
+        - game : MastermindGame
+        - view : MastermindView
+        + <<create>> MastermindController(game: MastermindGame, view: MastermindView)
         + startGame(nbRounds : Integer)
         + startRound() : Integer
-        + makeGuess(combinaison: Combinaison)
+        + makeGuess(combination: Combination)
         + resetGame()
     }
 
 }
 
-MastermindGame ..> Hint : use
-MastermindGame --> Combination : possède
-MastermindController -->  Model : use
-MastermindController --> MastermindView : possède
-Combination " *   " o---> "*\n-color" Colors : Possède >
-Hint --> HintSuccess : possède >
+MastermindGame --> "1" Combination : secretCombination
+MastermindGame --> "*" Combination : attempts
+MastermindController --> MastermindGame : controls
+MastermindController --> MastermindView : displays
+Combination --> "*" Colors : consists of
+Hint --> HintSuccess : determines >
+MastermindGame ..> Hint : uses >
 @enduml
