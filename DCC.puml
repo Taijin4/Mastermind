@@ -8,7 +8,6 @@ hide interface attributes
 package Model {
 
     class MastermindGame {
-        - secretCombination : Combination
         - currentAttempts : Integer
         - roundScore : Integer
         + <<create>> MastermindGame(nbColors : Integer)
@@ -23,12 +22,14 @@ package Model {
     class Combination {
         - colors: Color[]
         + <<create>> Combination(colors: Color[])
+        + <<create>> Combination()
         + generateSecreteCombination(nbColors : Integer): Combination
         + getColorAtPosition(position: Integer): Color
     }
 
     class Hint {
-        + <<create>> Hint()
+        - private: HintSuccess[]
+        + <<create>> Hint(success : HintSuccess[])
         + generateCombinationHint(secret: Combination, guess: Combination): Hint
         + verifyColors(): Integer
         + verifyPositions(): Integer
@@ -37,11 +38,19 @@ package Model {
     }
 
     enum Colors <<enum>> {
-        BLUE, RED, GREEN, YELLOW, ORANGE, PURPLE, PINK, GREY
+        BLUE,
+        RED,
+        GREEN,
+        YELLOW,
+        ORANGE,
+        PURPLE,
+        GREY
     }
 
     enum HintSuccess <<enum>> {
-        RIGHTPOSITIONANDCOLOR, RIGHTCOLOR, FALSE
+        RIGHTPOSITIONANDCOLOR,
+        RIGHTCOLOR,
+        FALSE
     }
 
     interface MasterMindObserver <<interface>> {
