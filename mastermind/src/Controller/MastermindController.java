@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Combination;
 import Model.MastermindGame;
 
 public class MastermindController {
@@ -14,10 +13,10 @@ public class MastermindController {
         //this.view = view;
     }
 
-    public void startGame(int nbRounds, int nbColors) {
-        this.nbColors = nbColors;
-        for (int i = 0; i < nbRounds; i++) {
-            startRound(nbColors);
+    public void startGame(int nbGames, int nbColors, int nbTrys) {
+        for (int i = 0; i < nbGames; i++) {
+            MastermindGame game = new MastermindGame(nbColors, nbTrys);
+            game.startGame();
         }
     }
 

@@ -1,4 +1,4 @@
-@startuml
+ @startuml
 skinparam style strictuml
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
@@ -28,7 +28,6 @@ package Model {
     }
 
     class Hint {
-        - private: HintSuccess[]
         + <<create>> Hint(success : HintSuccess[])
         + generateCombinationHint(secret: Combination, guess: Combination): Hint
         + verifyColors(): Integer
@@ -58,15 +57,11 @@ package Model {
         + updateColors(color : Integer)
     }
 
-    interface GameStrategy <<interface>> {
-        + executeStrategy(game : MastermindGame): void
-    }
-
 }
 
 package View {
 
-    interface MastermindView {
+    class MastermindView {
         + showStartScreen()
         + showGameScreen()
         + showEndScreen(score: Integer, isWin: Boolean)
@@ -102,11 +97,11 @@ package Controller {
 
 }
 
-MastermindGame --> "1" Combination : secretCombination
-MastermindGame --> "*" Combination : attempts
+MastermindGame --> "1\n -secretCombination" Combination : uses
+MastermindGame --> "1\n -playerAttempt" Combination : uses
 MastermindController --> MastermindGame : controls
 MastermindController --> MastermindView : displays
-Combination --> "*" Colors : consists of
-Hint --> HintSuccess : determines >
+Combination --> "*\n -colors" Colors : consists of
+Hint --> "*\n -hintSuccess" HintSuccess : determines >
 MastermindGame ..> Hint : uses >
 @enduml
