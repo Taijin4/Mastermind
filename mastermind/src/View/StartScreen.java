@@ -31,6 +31,10 @@ public class StartScreen extends JFrame {
         panel.add(button2, gbc);
         panel.add(button3, gbc);
 
+        button2.addActionListener( actionEvent  -> {
+
+        });
+
         button3.addActionListener( actionEvent  -> {
             System.exit(0);
         });
