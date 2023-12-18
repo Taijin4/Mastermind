@@ -2,12 +2,13 @@ import Model.Color;
 import Model.Combination;
 import Model.Hint;
 import Model.MastermindGame;
+import View.StartScreen;
 
 import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {/*
         MastermindGame game = new MastermindGame(6, 10);
         Combination secret = new Combination();
         secret.generateSecretCombination(6);
@@ -25,8 +26,9 @@ public class Main {
         Combination joueur = new Combination(playerColors);
         joueur.printCombination();
         game.submitCombination(joueur);
+*/
 
-
+        new StartScreen();
 
     }
 }
