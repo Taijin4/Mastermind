@@ -7,7 +7,7 @@ public class GameScreen extends JFrame {
 
     public GameScreen() {
         super( "Game Screen" );
-        setSize( 400, 500 );
+        setSize( 400, 550 );
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible( true );
 
@@ -73,7 +73,8 @@ public class GameScreen extends JFrame {
         colorsPanel.add(gray);
 
         setContentPane(colorsPanel);
-
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
 }

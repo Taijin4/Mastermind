@@ -30,6 +30,7 @@ public class StartScreen extends JFrame {
         JLabel labelRounds = new JLabel("Nombre de manches");
 
         JSlider slideRounds = new JSlider();
+        slideRounds.setBackground(Color.ORANGE);
         slideRounds.setMaximum(5);
         slideRounds.setMinimum(0);
         slideRounds.setValue(3);
@@ -41,6 +42,7 @@ public class StartScreen extends JFrame {
         JLabel labelColorsNumber = new JLabel("Nombre de pions disponible");
 
         JSlider slideColorsNumber = new JSlider();
+        slideColorsNumber.setBackground(Color.ORANGE);
         slideColorsNumber.setMaximum(8);
         slideColorsNumber.setMinimum(0);
         slideColorsNumber.setValue(8);
@@ -52,6 +54,7 @@ public class StartScreen extends JFrame {
         JLabel labelHoleNumber = new JLabel("Nombre de pions d'une combinaison");
 
         JSlider slideHoleNumber = new JSlider();
+        slideHoleNumber.setBackground(Color.ORANGE);
         slideHoleNumber.setMaximum(6);
         slideHoleNumber.setMinimum(0);
         slideHoleNumber.setValue(4);
@@ -69,8 +72,8 @@ public class StartScreen extends JFrame {
 
         buttonStart.addActionListener( actionEvent  -> {
             panel.removeAll();
-            gbc.gridx = 0; // On remet à zéro pour la première colonne
-            gbc.gridwidth = GridBagConstraints.REMAINDER; // Le composant suivant prend le reste de la ligne
+            gbc.gridx = 0;
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
 
             panel.add(new JLabel(icon), gbc);
             panel.add(labelRounds, gbc);
@@ -122,9 +125,8 @@ public class StartScreen extends JFrame {
         });
 
         setContentPane(panel);
+        setLocationRelativeTo(null);
         setVisible(true);
-
-
     }
 
 
