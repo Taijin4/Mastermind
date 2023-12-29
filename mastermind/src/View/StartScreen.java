@@ -8,14 +8,15 @@ public class StartScreen extends JFrame {
         super("Start");
         setSize(400, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(Color.ORANGE); // Définir le fond en jaune
+        panel.setBackground(Color.ORANGE);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(5, 0, 5, 0); // Des marges pour l'espacement
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
 
         // Charger et redimensionner l'image
         ImageIcon originalIcon = new ImageIcon("mastermind/src/View/logo.png");
@@ -23,21 +24,39 @@ public class StartScreen extends JFrame {
         Image newimg = image.getScaledInstance(400, 150, Image.SCALE_DEFAULT);
         ImageIcon icon = new ImageIcon(newimg);
 
-        JButton button2 = new JButton("Commencer");
-        JButton button3 = new JButton("Quitter");
+        JButton buttonStart = new JButton("Commencer");
+        JButton buttonLeave = new JButton("Quitter");
+
+        JSlider slide = new JSlider();
+        slide.setMaximum(12);
+        slide.setMinimum(0);
+        slide.setValue(6);
+        slide.setPaintTicks(true);
+        slide.setPaintLabels(true);
+        slide.setMinorTickSpacing(1);
+        slide.setMajorTickSpacing(1);
+        slide.setPreferredSize(new Dimension(300,50));
+
 
         // Ajouter les composants au panel
         panel.add(new JLabel(icon), gbc);
-        panel.add(button2, gbc);
-        panel.add(button3, gbc);
+        panel.add(buttonStart, gbc);
+        panel.add(buttonLeave, gbc);
 
-        button2.addActionListener( actionEvent  -> {
+        buttonStart.addActionListener( actionEvent  -> {
+            panel.remove(buttonLeave);
+            panel.remove(buttonStart);
 
+            panel.add(slide, gbc);
+
+            panel.updateUI();
         });
 
-        button3.addActionListener( actionEvent  -> {
+        buttonLeave.addActionListener( actionEvent  -> {
             System.exit(0);
         });
+
+
 
         setContentPane(panel);
         setVisible(true);

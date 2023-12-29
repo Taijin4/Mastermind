@@ -3,6 +3,7 @@ import Model.Combination;
 import Model.Hint;
 import Model.MastermindGame;
 import View.GameScreen;
+import View.StartScreen;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class Main {
         joueur.printCombination();
         game.submitCombination(joueur);*/
 
-        new GameScreen();
+        new StartScreen();
 
     }
 }

@@ -12,8 +12,6 @@ public class GameScreen extends JFrame {
         setVisible( true );
 
         JPanel gamePanel = new JPanel();
-        gamePanel.setLayout();
-
         JButton red = new JButton(new ImageIcon("mastermind/src/View/Images/red.png"));
         red.setContentAreaFilled(false); // Supprime l'arrière-plan
         red.setBorderPainted(false); // Supprime la bordure
