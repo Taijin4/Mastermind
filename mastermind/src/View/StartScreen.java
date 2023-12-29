@@ -95,14 +95,31 @@ public class StartScreen extends JFrame {
             gbc.anchor = GridBagConstraints.EAST;
             panel.add(buttonPlay, gbc);
 
-            panel.updateUI(); // Mettre à jour l'interface utilisateur
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.insets = new Insets(10, 10, 10, 10);
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.weightx = 1.0;
+
+            panel.updateUI();
         });
 
         buttonLeave.addActionListener( actionEvent  -> {
             System.exit(0);
         });
 
+        buttonBack.addActionListener( actionEvent ->{
+            panel.removeAll();
+            panel.add(new JLabel(icon), gbc);
+            panel.add(buttonStart, gbc);
+            panel.add(buttonLeave, gbc);
+            panel.updateUI();
+        });
 
+        buttonPlay.addActionListener( actionEvent ->{
+            new GameScreen();
+            StartScreen.this.dispose();
+        });
 
         setContentPane(panel);
         setVisible(true);
