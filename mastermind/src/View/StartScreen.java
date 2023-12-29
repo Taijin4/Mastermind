@@ -6,7 +6,7 @@ public class StartScreen extends JFrame {
 
     public StartScreen() {
         super("Start");
-        setSize(400, 500);
+        setSize(400, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.ORANGE);
@@ -27,29 +27,75 @@ public class StartScreen extends JFrame {
         JButton buttonStart = new JButton("Commencer");
         JButton buttonLeave = new JButton("Quitter");
 
-        JSlider slide = new JSlider();
-        slide.setMaximum(12);
-        slide.setMinimum(0);
-        slide.setValue(6);
-        slide.setPaintTicks(true);
-        slide.setPaintLabels(true);
-        slide.setMinorTickSpacing(1);
-        slide.setMajorTickSpacing(1);
-        slide.setPreferredSize(new Dimension(300,50));
+        JLabel labelRounds = new JLabel("Nombre de manches");
 
+        JSlider slideRounds = new JSlider();
+        slideRounds.setMaximum(5);
+        slideRounds.setMinimum(0);
+        slideRounds.setValue(3);
+        slideRounds.setPaintTicks(true);
+        slideRounds.setPaintLabels(true);
+        slideRounds.setMinorTickSpacing(1);
+        slideRounds.setMajorTickSpacing(1);
 
-        // Ajouter les composants au panel
+        JLabel labelColorsNumber = new JLabel("Nombre de pions disponible");
+
+        JSlider slideColorsNumber = new JSlider();
+        slideColorsNumber.setMaximum(8);
+        slideColorsNumber.setMinimum(0);
+        slideColorsNumber.setValue(8);
+        slideColorsNumber.setPaintTicks(true);
+        slideColorsNumber.setPaintLabels(true);
+        slideColorsNumber.setMinorTickSpacing(1);
+        slideColorsNumber.setMajorTickSpacing(1);
+
+        JLabel labelHoleNumber = new JLabel("Nombre de pions d'une combinaison");
+
+        JSlider slideHoleNumber = new JSlider();
+        slideHoleNumber.setMaximum(6);
+        slideHoleNumber.setMinimum(0);
+        slideHoleNumber.setValue(4);
+        slideHoleNumber.setPaintTicks(true);
+        slideHoleNumber.setPaintLabels(true);
+        slideHoleNumber.setMinorTickSpacing(1);
+        slideHoleNumber.setMajorTickSpacing(1);
+
+        JButton buttonBack = new JButton("Retour");
+        JButton buttonPlay = new JButton("Jouer");
+
         panel.add(new JLabel(icon), gbc);
         panel.add(buttonStart, gbc);
         panel.add(buttonLeave, gbc);
 
         buttonStart.addActionListener( actionEvent  -> {
-            panel.remove(buttonLeave);
-            panel.remove(buttonStart);
+            panel.removeAll();
+            gbc.gridx = 0; // On remet à zéro pour la première colonne
+            gbc.gridwidth = GridBagConstraints.REMAINDER; // Le composant suivant prend le reste de la ligne
 
-            panel.add(slide, gbc);
+            panel.add(new JLabel(icon), gbc);
+            panel.add(labelRounds, gbc);
+            panel.add(slideRounds, gbc);
+            panel.add(labelColorsNumber, gbc);
+            panel.add(slideColorsNumber, gbc);
+            panel.add(labelHoleNumber, gbc);
+            panel.add(slideHoleNumber, gbc);
 
-            panel.updateUI();
+            gbc.gridwidth = 1;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+
+            // Bouton "Retour" à gauche
+            gbc.gridx = 0;
+            gbc.anchor = GridBagConstraints.WEST;
+            panel.add(buttonBack, gbc);
+
+            // Bouton "Jouer" à droite
+            gbc.gridx = 2;
+            gbc.weightx = 0;
+            gbc.anchor = GridBagConstraints.EAST;
+            panel.add(buttonPlay, gbc);
+
+            panel.updateUI(); // Mettre à jour l'interface utilisateur
         });
 
         buttonLeave.addActionListener( actionEvent  -> {
