@@ -3,15 +3,18 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
+import static java.lang.Math.ceil;
+
 public class GameScreen extends JFrame {
 
     public GameScreen(int nbPionsCombinaisons) {
         setTitle("Panel divisé en trois parties");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(new Dimension(800, 1000));
+        setSize(new Dimension(810, 1000));
         setVisible(true);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(Color.ORANGE);
 
         JPanel gamePanel = new JPanel(new GridLayout(1, 2));
         JPanel gameLinesPanel = new JPanel(new GridLayout(10, 1));
@@ -27,11 +30,16 @@ public class GameScreen extends JFrame {
                 button.setOpaque(false);
                 linePanel.add(button);
             }
-            JPanel hintPanel = new JPanel(new GridLayout(2, nbPionsCombinaisons/2));
+
+            int nbColumns = nbPionsCombinaisons % 2 != 0 ? (nbPionsCombinaisons/2 + 1) : (nbPionsCombinaisons/2);
+
+            JPanel hintPanel = new JPanel(new GridLayout(2, nbColumns));
+
+            int minusButton = 0;
             for (int j = 0; j < 2; j++) {
                 JPanel lineHintPanel = new JPanel();
                 lineHintPanel.setLayout(new FlowLayout());
-                for (int k = 0; k < nbPionsCombinaisons/2; k++) {
+                for (int k = 0; k < nbColumns - minusButton ; k++) {
                     JButton button = new JButton(new ImageIcon("mastermind/src/View/Images/little_circle.png"));
                     button.setContentAreaFilled(false); // Supprime l'arrière-plan
                     button.setBorderPainted(false); // Supprime la bordure
@@ -40,7 +48,10 @@ public class GameScreen extends JFrame {
                     lineHintPanel.add(button);
                 }
                 hintPanel.add(lineHintPanel);
+                if (nbPionsCombinaisons % 2 != 0)
+                    minusButton = 1;
             }
+
             linePanel.add(hintPanel);
             gameLinesPanel.add(linePanel);
         }
