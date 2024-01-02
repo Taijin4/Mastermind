@@ -5,13 +5,48 @@ import java.awt.*;
 
 public class GameScreen extends JFrame {
 
-    public GameScreen() {
-        super( "Game Screen" );
-        setSize( 400, 550 );
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible( true );
+    public GameScreen(int nbPionsCombinaisons) {
+        setTitle("Panel divisé en trois parties");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(new Dimension(800, 1000));
+        setVisible(true);
 
-        JPanel gamePanel = new JPanel();
+        JPanel mainPanel = new JPanel(new BorderLayout());
+
+        JPanel gamePanel = new JPanel(new GridLayout(1, 2));
+        JPanel gameLinesPanel = new JPanel(new GridLayout(10, 1));
+
+        for (int i = 0; i < 10; i++) {
+            JPanel linePanel = new JPanel();
+            linePanel.setLayout(new FlowLayout()); // Aligne les boutons de chaque ligne verticalement
+            for (int j = 0; j < nbPionsCombinaisons; j++) {
+                JButton button = new JButton(new ImageIcon("mastermind/src/View/Images/circle.png"));
+                button.setContentAreaFilled(false); // Supprime l'arrière-plan
+                button.setBorderPainted(false); // Supprime la bordure
+                button.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
+                button.setOpaque(false);
+                linePanel.add(button);
+            }
+            JPanel hintPanel = new JPanel(new GridLayout(2, nbPionsCombinaisons/2));
+            for (int j = 0; j < 2; j++) {
+                JPanel lineHintPanel = new JPanel();
+                lineHintPanel.setLayout(new FlowLayout());
+                for (int k = 0; k < nbPionsCombinaisons/2; k++) {
+                    JButton button = new JButton(new ImageIcon("mastermind/src/View/Images/little_circle.png"));
+                    button.setContentAreaFilled(false); // Supprime l'arrière-plan
+                    button.setBorderPainted(false); // Supprime la bordure
+                    button.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
+                    button.setOpaque(false);
+                    lineHintPanel.add(button);
+                }
+                hintPanel.add(lineHintPanel);
+            }
+            linePanel.add(hintPanel);
+            gameLinesPanel.add(linePanel);
+        }
+        gamePanel.add(gameLinesPanel);
+        mainPanel.add(gamePanel, BorderLayout.CENTER);
+
         JButton red = new JButton(new ImageIcon("mastermind/src/View/Images/red.png"));
         red.setContentAreaFilled(false); // Supprime l'arrière-plan
         red.setBorderPainted(false); // Supprime la bordure
@@ -61,20 +96,24 @@ public class GameScreen extends JFrame {
         gray.setOpaque(false);
 
 
-        JPanel colorsPanel = new JPanel();
-        colorsPanel.setLayout( new FlowLayout());
-        colorsPanel.add(red);
-        colorsPanel.add(blue);
-        colorsPanel.add(green);
-        colorsPanel.add(yellow);
-        colorsPanel.add(orange);
-        colorsPanel.add(pink);
-        colorsPanel.add(purple);
-        colorsPanel.add(gray);
+        JPanel colorsPanel = new JPanel(new BorderLayout());
+        JPanel colorsButtonPanel = new JPanel(new FlowLayout());
+        colorsButtonPanel.add(red);
+        colorsButtonPanel.add(blue);
+        colorsButtonPanel.add(green);
+        colorsButtonPanel.add(yellow);
+        colorsButtonPanel.add(orange);
+        colorsButtonPanel.add(pink);
+        colorsButtonPanel.add(purple);
+        colorsButtonPanel.add(gray);
 
-        setContentPane(colorsPanel);
-        setLocationRelativeTo(null);
-        setVisible(true);
+        colorsPanel.add(colorsButtonPanel, BorderLayout.CENTER);
+        mainPanel.add(colorsPanel, BorderLayout.SOUTH);
+
+
+        setContentPane(mainPanel);
+        revalidate(); // Force la mise à jour de la disposition des composants
+        repaint();
     }
 
 }
