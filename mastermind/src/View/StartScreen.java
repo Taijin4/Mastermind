@@ -120,7 +120,7 @@ public class StartScreen extends JFrame {
         });
 
         buttonPlay.addActionListener( actionEvent ->{
-            new GameScreen(slideHoleNumber.getValue());
+            new GameScreen(slideHoleNumber.getValue(), slideColorsNumber.getValue());
             StartScreen.this.dispose();
         });
 

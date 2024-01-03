@@ -2,12 +2,15 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Math.ceil;
 
 public class GameScreen extends JFrame {
 
-    public GameScreen(int nbPionsCombinaisons) {
+    public GameScreen(int nbPionsCombinaisons, int nbColors) {
         setTitle("Panel divisé en trois parties");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(810, 1000));
@@ -58,65 +61,71 @@ public class GameScreen extends JFrame {
         gamePanel.add(gameLinesPanel);
         mainPanel.add(gamePanel, BorderLayout.CENTER);
 
-        JButton red = new JButton(new ImageIcon("mastermind/src/View/Images/red.png"));
+
+        JButton red = new JButton(new ImageIcon("mastermind/src/View/Images/Colors/red.png"));
         red.setContentAreaFilled(false); // Supprime l'arrière-plan
         red.setBorderPainted(false); // Supprime la bordure
         red.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         red.setOpaque(false);
 
-        JButton blue = new JButton(new ImageIcon("mastermind/src/View/Images/blue.png"));
+        JButton blue = new JButton(new ImageIcon("mastermind/src/View/Images/Colors/blue.png"));
         blue.setContentAreaFilled(false); // Supprime l'arrière-plan
         blue.setBorderPainted(false); // Supprime la bordure
         blue.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         blue.setOpaque(false);
 
-        JButton green = new JButton(new ImageIcon("mastermind/src/View/Images/green.png"));
+        JButton green = new JButton(new ImageIcon("mastermind/src/View/Images/Colors/green.png"));
         green.setContentAreaFilled(false); // Supprime l'arrière-plan
         green.setBorderPainted(false); // Supprime la bordure
         green.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         green.setOpaque(false);
 
-        JButton orange = new JButton(new ImageIcon("mastermind/src/View/Images/orange.png"));
+        JButton orange = new JButton(new ImageIcon("mastermind/src/View/Images/Colors/orange.png"));
         orange.setContentAreaFilled(false); // Supprime l'arrière-plan
         orange.setBorderPainted(false); // Supprime la bordure
         orange.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         orange.setOpaque(false);
 
-        JButton yellow = new JButton(new ImageIcon("mastermind/src/View/Images/yellow.png"));
+        JButton yellow = new JButton(new ImageIcon("mastermind/src/View/Images/Colors/yellow.png"));
         yellow.setContentAreaFilled(false); // Supprime l'arrière-plan
         yellow.setBorderPainted(false); // Supprime la bordure
         yellow.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         yellow.setOpaque(false);
 
-        JButton pink = new JButton(new ImageIcon("mastermind/src/View/Images/pink.png"));
+        JButton pink = new JButton(new ImageIcon("mastermind/src/View/Images/Colors/pink.png"));
         pink.setContentAreaFilled(false); // Supprime l'arrière-plan
         pink.setBorderPainted(false); // Supprime la bordure
         pink.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         pink.setOpaque(false);
 
-        JButton purple = new JButton(new ImageIcon("mastermind/src/View/Images/purple.png"));
+        JButton purple = new JButton(new ImageIcon("mastermind/src/View/Images/Colors/purple.png"));
         purple.setContentAreaFilled(false); // Supprime l'arrière-plan
         purple.setBorderPainted(false); // Supprime la bordure
         purple.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         purple.setOpaque(false);
 
-        JButton gray = new JButton(new ImageIcon("mastermind/src/View/Images/gray.png"));
+        JButton gray = new JButton(new ImageIcon("mastermind/src/View/Images/Colors/gray.png"));
         gray.setContentAreaFilled(false); // Supprime l'arrière-plan
         gray.setBorderPainted(false); // Supprime la bordure
         gray.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         gray.setOpaque(false);
 
+        List<JButton> buttonColorsList = new ArrayList<JButton>();
+        buttonColorsList.add(red);
+        buttonColorsList.add(blue);
+        buttonColorsList.add(green);
+        buttonColorsList.add(yellow);
+        buttonColorsList.add(orange);
+        buttonColorsList.add(pink);
+        buttonColorsList.add(purple);
+        buttonColorsList.add(gray);
 
         JPanel colorsPanel = new JPanel(new BorderLayout());
         JPanel colorsButtonPanel = new JPanel(new FlowLayout());
-        colorsButtonPanel.add(red);
-        colorsButtonPanel.add(blue);
-        colorsButtonPanel.add(green);
-        colorsButtonPanel.add(yellow);
-        colorsButtonPanel.add(orange);
-        colorsButtonPanel.add(pink);
-        colorsButtonPanel.add(purple);
-        colorsButtonPanel.add(gray);
+        for (int i = 0; i < nbColors; i++) {
+            colorsButtonPanel.add(buttonColorsList.get(i));
+        }
+
 
         colorsPanel.add(colorsButtonPanel, BorderLayout.CENTER);
         mainPanel.add(colorsPanel, BorderLayout.SOUTH);

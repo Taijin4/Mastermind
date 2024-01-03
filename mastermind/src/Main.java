@@ -28,7 +28,8 @@ public class Main {
         joueur.printCombination();
         game.submitCombination(joueur);*/
 
-        new StartScreen();
+        //new StartScreen();
+        new GameScreen(6, 8);
 
     }
 }
