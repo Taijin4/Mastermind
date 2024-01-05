@@ -1,48 +1,69 @@
 package Model;
 
 import java.util.List;
-import java.util.Random;
 
 public class MastermindGame {
-    private Combination secret;
-    private Combination guess;
-    private int roundScore;
+    private Combination secretCombination;
     private int nbRounds;
     private int nbColor;
     private int nbTrys;
+    private int nbHoleCombination;
+    private Combination playerCombination;
     private List<MasterMindObserver> _observers;
-    private int currentTry;
+    private int score = 0;
 
-    public MastermindGame(int nbColor, int nbTrys) {
+    public MastermindGame(int nbColor, int nbRounds, int nbHoleCombination) {
         this.nbColor = nbColor;
-        this.nbTrys = nbTrys;
-        currentTry = 0;
+        this.nbRounds = nbRounds;
+        this.nbHoleCombination = nbHoleCombination;
+        this.playerCombination = new Combination(nbHoleCombination);
     }
 
     public void addObsever(MasterMindObserver observer) {
         _observers.add(observer);
     }
 
-    public void startGame() {
-        currentTry ++;
+    public int getNbColor() {
+        return this.nbColor;
     }
 
-    public void NextTurn() {
-        if (currentTry <= nbTrys) {
-            currentTry ++;
-        }
+    public int getNbTrys() {
+        return this.nbTrys;
     }
 
-    public void setSecret(Combination secret) {
-        this.secret = secret;
+    public int getNbRounds() {
+        return this.nbRounds;
     }
 
-    public void SubmitCombination(Combination guess) {
-        this.guess = guess;
-        Hint hint = new Hint().generateCombinationHint(this.guess, this.secret);
-
-        System.out.println("Correct colors : " + hint.getCorrectColors());
-        System.out.println("Correct positions : " + hint.getCorrectPositions());
+    public int getNbHoleCombination() {
+        return this.nbHoleCombination;
     }
 
+    public void addColorInCombination(Color color, int index) {
+        playerCombination.setColorAtPosition(color, index);
+    }
+
+    public Combination getPlayerCombination() {
+        return playerCombination;
+    }
+
+    public void setSecretCombination() {
+        Combination secretCombination = new Combination(nbHoleCombination);
+        secretCombination.generateSecretCombination();
+//        secretCombination.generateSecretCombinationOneTimeColor();
+        this.secretCombination = secretCombination;
+        secretCombination.printCombination();
+    }
+
+    public Combination getSecretCombination() {
+        return this.secretCombination;
+    }
+
+    public void addToScore(int roundScore) {
+        this.score += roundScore;
+    }
+
+    public int getScore() {
+        return this.score;
+    }
 }

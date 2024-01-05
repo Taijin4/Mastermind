@@ -1,4 +1,7 @@
 package View;
+import Controller.MastermindController;
+import Model.MastermindGame;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -120,7 +123,10 @@ public class StartScreen extends JFrame {
         });
 
         buttonPlay.addActionListener( actionEvent ->{
-            new GameScreen(slideHoleNumber.getValue(), slideColorsNumber.getValue());
+//            System.out.println("Slide colors : " + slideColorsNumber.getValue() + ", Slide rounds : " + slideRounds.getValue() + ", Slide hole number : " + slideHoleNumber.getValue());
+            MastermindGame model = new MastermindGame(slideColorsNumber.getValue(), slideRounds.getValue(), slideHoleNumber.getValue());
+            MastermindController controller = new MastermindController(model);
+            controller.startGame();
             StartScreen.this.dispose();
         });
 
