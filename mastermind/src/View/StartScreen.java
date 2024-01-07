@@ -89,7 +89,6 @@ public class StartScreen extends JFrame {
         slider.setMinorTickSpacing(1);
         slider.setMajorTickSpacing(1);
 
-        // Personnalisation des labels
         Dictionary<Integer, JLabel> labelTable = new Hashtable<>();
         labelTable.put(0, new JLabel("Facile"));
         labelTable.put(1, new JLabel("Classique"));
