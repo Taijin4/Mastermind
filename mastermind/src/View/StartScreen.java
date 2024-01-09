@@ -14,10 +14,32 @@ public class StartScreen extends JFrame {
 
     public StartScreen() {
         super("Start");
-        setSize(400, 700);
+        setSize(400, 1000);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(0, 180, 216));
+
+        Font customFont = new Font("Helvetica", Font.BOLD, 16);
+        Color customTextColor = new Color(0xCA, 0xF0, 0xF8); // Couleur bleu clair (CAF0F8 en hexadécimal)
+        UIManager.put("Label.font", customFont);
+        UIManager.put("Label.foreground", customTextColor);
+        UIManager.put("Button.font", customFont);
+        UIManager.put("Slider.font", customFont);
+        UIManager.put("Slider.foreground", customTextColor);
+        UIManager.put("ComboBox.font", customFont);
+        UIManager.put("ComboBox.foreground", customTextColor);
+        UIManager.put("TextField.font", customFont);
+        UIManager.put("TextField.foreground", customTextColor);
+        UIManager.put("TextArea.font", customFont);
+        UIManager.put("TextArea.foreground", customTextColor);
+        UIManager.put("Menu.font", customFont);
+        UIManager.put("Menu.foreground", customTextColor);
+        UIManager.put("MenuItem.font", customFont);
+        UIManager.put("MenuItem.foreground", customTextColor);
+        UIManager.put("RadioButton.font", customFont);
+        UIManager.put("RadioButton.foreground", customTextColor);
+        UIManager.put("CheckBox.font", customFont);
+        UIManager.put("CheckBox.foreground", customTextColor);
 
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -39,7 +61,7 @@ public class StartScreen extends JFrame {
         JLabel labelRounds = new JLabel("Nombre de manches");
 
         JSlider slideRounds = new JSlider();
-        slideRounds.setBackground(Color.ORANGE);
+        slideRounds.setBackground(new Color(0, 180, 216));
         slideRounds.setMaximum(5);
         slideRounds.setMinimum(1);
         slideRounds.setValue(3);
@@ -51,7 +73,7 @@ public class StartScreen extends JFrame {
         JLabel labelColorsNumber = new JLabel("Nombre de pions disponible");
 
         JSlider slideColorsNumber = new JSlider();
-        slideColorsNumber.setBackground(Color.ORANGE);
+        slideColorsNumber.setBackground(new Color(0, 180, 216));
         slideColorsNumber.setMaximum(8);
         slideColorsNumber.setMinimum(1);
         slideColorsNumber.setValue(8);
@@ -63,7 +85,7 @@ public class StartScreen extends JFrame {
         JLabel labelHoleNumber = new JLabel("Nombre de pions d'une combinaison");
 
         JSlider slideHoleNumber = new JSlider();
-        slideHoleNumber.setBackground(Color.ORANGE);
+        slideHoleNumber.setBackground(new Color(0, 180, 216));
         slideHoleNumber.setMaximum(6);
         slideHoleNumber.setMinimum(1);
         slideHoleNumber.setValue(4);
@@ -75,7 +97,7 @@ public class StartScreen extends JFrame {
         JLabel labelAttempts = new JLabel("Nombre de tentatives");
 
         JSlider slideAttempts = new JSlider();
-        slideAttempts.setBackground(Color.ORANGE);
+        slideAttempts.setBackground(new Color(0, 180, 216));
         slideAttempts.setMaximum(12);
         slideAttempts.setMinimum(1);
         slideAttempts.setValue(10);
@@ -87,7 +109,7 @@ public class StartScreen extends JFrame {
         JLabel labelDifficulty = new JLabel("Difficulté");
 
         JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 2, 1);
-        slider.setBackground(Color.ORANGE);
+        slider.setBackground(new Color(0, 180, 216));
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
         slider.setMinorTickSpacing(1);
