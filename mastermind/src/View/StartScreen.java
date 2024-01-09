@@ -6,6 +6,9 @@ import java.util.Hashtable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Font;
+import java.io.IOException;
+
 
 public class StartScreen extends JFrame {
 
@@ -14,7 +17,8 @@ public class StartScreen extends JFrame {
         setSize(400, 700);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(Color.ORANGE);
+        panel.setBackground(new Color(0, 180, 216));
+
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -24,9 +28,9 @@ public class StartScreen extends JFrame {
         gbc.weightx = 1.0;
 
         // Charger et redimensionner l'image
-        ImageIcon originalIcon = new ImageIcon("mastermind/src/View/logo.png");
+        ImageIcon originalIcon = new ImageIcon("mastermind/src/View/Images/logo.png");
         Image image = originalIcon.getImage();
-        Image newimg = image.getScaledInstance(400, 150, Image.SCALE_DEFAULT);
+        Image newimg = image.getScaledInstance(500, 300, Image.SCALE_DEFAULT);
         ImageIcon icon = new ImageIcon(newimg);
 
         JButton buttonStart = new JButton("Commencer");
