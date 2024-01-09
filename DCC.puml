@@ -53,22 +53,25 @@ package Model {
     }
 
     interface MasterMindObserver <<interface>> {
-        + updatePositions(hint : Hint)
-        + updateColors(color : Integer)
+        + updateCombination(color : Color, index : Integer
+
     }
+
 
 }
 
 package View {
 
-    class MastermindView {
-        + showStartScreen()
-        + showGameScreen()
-        + showEndScreen(score: Integer, isWin: Boolean)
-        + selectColorsForCombination(): Combination
-        + validateCombination() : Combination
-        + showHints(hint: Hint)
-        + resetCombination()
+    class StartScreen extends JFrame {
+        + StartScreen()
+    }
+
+    class EndScreen extends JFrame {
+        + EndScreen()
+    }
+
+    class GameScreen extends JFrame implements Model.MasterMindObserver{
+        + GameScreen()
     }
 
     class MastermindSwingView implements MastermindView {
@@ -86,13 +89,19 @@ package View {
 package Controller {
 
     class MastermindController {
-        - game : MastermindGame
+        - model : MastermindGame
         - view : MastermindView
-        + <<create>> MastermindController(game: MastermindGame, view: MastermindView)
-        + startGame(nbRounds : Integer)
-        + startRound() : Integer
-        + makeGuess(combination: Combination)
-        + resetGame()
+        - gameScore : Integer
+        - nbColors :Integer
+        - actualRound : Integer
+        + <<create>> MastermindController(model : MastermindGame)
+        + startGame()
+        + endGame()
+        + startRound(nbColors : Integer, nbTrys : Integer, nbHoleCombination :Integer) : Integer
+        + endRound(lastTurnHint : Integer[])
+        + addColorInCombination(color : Color, index : Integer)
+        + submitTry() : Integer[]
+
     }
 
 }
