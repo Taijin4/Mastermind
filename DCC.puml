@@ -8,30 +8,51 @@ hide interface attributes
 package Model {
 
     class MastermindGame {
-        - currentAttempts : Integer
-        - roundScore : Integer
-        + <<create>> MastermindGame(nbColors : Integer)
-        + verifyVictory(): Boolean
-        + verifyLoose(): Boolean
-        + getScore(): Integer
-        + setScore(score : Integer)
-        + submitPlayerCombination(guess : Combination)
-        + getCurrentAttempt(): Integer
+        - secretCombination : Combination
+        - nbRounds : Integer
+        - nbTrys : Integer
+        - nbHoleCombination : Integer
+        - playerCombination : Combination
+        - _observers : List<MasterMindObserver>
+        - score : Integer
+
+        + MastermindGame(nbColor :Integer, nbRounds : Integer, nbHoleCombination : Integer)
+        + addObserver(observer : MasterMindObserver)
+        + getNbColor() : Integer
+        + getNbTrys() : Integer
+        + getNbRounds() : Integer
+        + getNbHoleCombination() : Integer
+        + addColorInCombination(color : Color, index : Integer)
+        + getPlayerCombination() : Combination
+        + setSecretCombination()
+        + addToScore(roundScore : Integer)
+        + getScore() : Integer
     }
 
     class Combination {
         - colors: Color[]
-        + <<create>> Combination(colors: Color[])
-        + <<create>> Combination()
-        + generateSecreteCombination(nbColors : Integer): Combination
-        + getColorAtPosition(position: Integer): Color
+        + <<create>> Combination(nbColors : Integer)
+        + <<create>> Combination(combination : Combination)
+        + getColorAtPosition(position: Integer) : Color
+        + setColorAtPostion(color : Color, position : Integer)
+        + addCombination(color : Color)
+        + containsColor(color : Color) : Boolean
+        + size() : Integer
+        + removeAtPosition(i : Integer)
+        + removeColor(color : Color)
+        + printCombination()
+        + generateSecreteCombination()
+        + isValid() : Boolean
+        + verifyCombination(secret : Combination) : Hint
+        + resetCombination()
     }
 
     class Hint {
-        + <<create>> Hint(success : HintSuccess[])
-        + generateCombinationHint(secret: Combination, guess: Combination): Hint
-        + verifyColors(): Integer
-        + verifyPositions(): Integer
+        - correctPositions : Integer
+        - correctColors : Integer
+        - hint : ArrayList<HintSuccess>
+        + <<create>> Hint(correctPositions : Integer, correctColors : Integer)
+        + <<create>> Hint()
         + getCorrectPositions(): Integer
         + getCorrectColors(): Integer
     }
@@ -63,15 +84,15 @@ package Model {
 package View {
 
     class StartScreen extends JFrame {
-        + StartScreen()
+        + <<create>> StartScreen()
     }
 
     class EndScreen extends JFrame {
-        + EndScreen()
+        + <<create>> EndScreen()
     }
 
     class GameScreen extends JFrame implements Model.MasterMindObserver{
-        + GameScreen()
+        + <<create>> GameScreen()
     }
 
     class MastermindSwingView implements MastermindView {
