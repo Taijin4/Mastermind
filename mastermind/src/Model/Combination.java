@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Random;
 
 public class Combination {
-
     ArrayList<Color> colors;
     public Combination(int nbColors) {
         this.colors = new ArrayList<>(nbColors);
