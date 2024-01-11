@@ -1,26 +1,28 @@
 package Controller;
 
-import Model.Color;
-import Model.Combination;
-import Model.Hint;
-import Model.MastermindGame;
+import Model.*;
 import View.EndScreen;
 import View.GameScreen;
 
 public class MastermindController {
 
     private MastermindGame model;
-    // private MastermindView view;
-    private int gameScore;
-    private int nbColors;
     private int actualRound = 1;
-    public MastermindController(MastermindGame model) {
+    public MastermindController(MastermindGame model, int hintStrategy) {
         this.model = model;
+
+        switch (hintStrategy) {
+            case 0 -> model.setHintStrategy(new EasyHint());
+            case 1 -> model.setHintStrategy(new ClassicHint());
+            case 2 -> model.setHintStrategy(new DigitalHint());
+        }
+
     }
 
     public void startGame() {
         if (actualRound <= model.getNbRounds()) {
-            startRound(model.getNbColor(), 10, model.getNbHoleCombination());
+            System.out.println("Actual round : " + actualRound + ", nbRounds : " + model.getNbRounds());
+            startRound();
             actualRound++;
         } else {
             endGame();
@@ -28,40 +30,55 @@ public class MastermindController {
     }
 
     public void endGame() {
-        EndScreen endScreen = new EndScreen(model.getScore());
+
+        if (model.getHintStrategy() instanceof ClassicHint) {
+            EndScreen endScreen = new EndScreen(model.getScore() + 4);
+        } else {
+            EndScreen endScreen = new EndScreen(model.getScore());
+        }
+
     }
 
-    public int startRound(int nbColors, int nbTrys, int nbHoleCombination) {
-        GameScreen gameScreen = new GameScreen(this, nbColors, nbTrys, nbHoleCombination);
+    public int startRound() {
+        GameScreen gameScreen = new GameScreen(this, this.model);
+        model.resetLastHint();
+        model.addObserver(gameScreen);
         model.setSecretCombination();
+        model.resetActualTry();
         return 0;
     }
 
-    public void endRound(int[] lastTurnHint) {
-        int nbPiece = model.getNbHoleCombination();
-        int nbWellPlacedPieces = lastTurnHint[0];
+    public void endRound() {
 
-        int score = nbPiece - nbWellPlacedPieces;
+        int nbWellPlacedPieces = model.getLastHint().getCorrectColorsAtCorrectPositions();
+        int nbBadPlacedPieces = model.getLastHint().getCorrectColorsAtBadPositions();
+
+        int score = nbBadPlacedPieces;
         score += 3 * nbWellPlacedPieces;
 
         model.addToScore(score);
+        System.out.println("Add score : " + score);
+
+        startGame();
     }
 
     public void addColorInCombination(Color color, int index) {
         model.addColorInCombination(color, index);
     }
 
-    public int[] submitTry() {
-        if (model.getPlayerCombination().isValid()) {
-            Combination playerCopy = new Combination(model.getPlayerCombination());
-            model.getPlayerCombination().resetCombination();
-            Hint hint = playerCopy.verifyCombination(model.getSecretCombination());
-            int[] hintValues = new int[2];
-            hintValues[0] = hint.getCorrectPositions();
-            hintValues[1] = hint.getCorrectColors();
-            return hintValues;
-        }
-        return new int[]{0};
+    public void submitTry() {
+        model.submitTry();
     }
+
+    public boolean isRoundEnd() {
+        Hint lastHint = model.getLastHint();
+        boolean isEnd = false;
+
+        if (lastHint.getCorrectColorsAtCorrectPositions() == model.getNbHoleCombination())
+            isEnd = true;
+
+        return isEnd;
+    }
+
 
 }

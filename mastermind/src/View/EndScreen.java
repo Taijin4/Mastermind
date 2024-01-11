@@ -6,7 +6,7 @@ import java.awt.*;
 public class EndScreen extends JFrame {
 
 	public EndScreen(int score) {
-		setTitle("CScore");
+		setTitle("Score");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(810, 1000));
 		setVisible(true);
@@ -20,14 +20,17 @@ public class EndScreen extends JFrame {
 
 		JLabel title = new JLabel("Bravo, vous avez finis toutes les manches !", SwingConstants.CENTER);
 		title.setFont(new Font("Arial", Font.PLAIN, 36)); // Taille de police 36
+		title.setForeground(Color.black);
 		titlePanel.add(title);
 
 		JLabel titleScore = new JLabel("Votre score est de : ", SwingConstants.CENTER);
 		titleScore.setFont(new Font("Arial", Font.PLAIN, 36)); // Taille de police 36
+		titleScore.setForeground(Color.black);
 		titlePanel.add(titleScore);
 
 		JLabel scoreLabel = new JLabel(text, SwingConstants.CENTER);
 		scoreLabel.setFont(new Font("Arial", Font.PLAIN, 36)); // Taille de police 36
+		scoreLabel.setForeground(Color.black);
 		scorePanel.add(scoreLabel);
 
 		mainPanel.add(titlePanel, BorderLayout.NORTH);

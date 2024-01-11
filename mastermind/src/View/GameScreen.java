@@ -1,43 +1,41 @@
 package View;
 
 import Controller.MastermindController;
-import Model.MasterMindObserver;
+import Model.*;
 import Model.Color;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ContainerListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.ceil;
+public class GameScreen extends JFrame implements MastermindGameObserver {
+    JButton[][] hintButtonsList;
+    MastermindGame model;
 
-public class GameScreen extends JFrame implements MasterMindObserver {
-
-    public GameScreen(MastermindController controller, int nbColors, int nbTrys, int nbHoleCombination) {
+    public GameScreen(MastermindController controller, MastermindGame model) {
         setTitle("Mastermind");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(810, 1000));
         setVisible(true);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        JButton[][] hintButtonsList = new JButton[nbTrys][nbHoleCombination];
+        this.model = model;
 
         final JButton[] actualClickedColor = {new JButton()};
-        final int[] actualTry = {1};
+        hintButtonsList = new JButton[model.getNbTrys()][model.getNbHoleCombination()];
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
         JPanel gamePanel = new JPanel(new GridLayout(1, 2));
-        JPanel gameLinesPanel = new JPanel(new GridLayout(nbTrys, 1));
+        JPanel gameLinesPanel = new JPanel(new GridLayout(model.getNbTrys(), 1));
 
-        for (int i = 0; i < nbTrys; i++) {
+        for (int i = 0; i < model.getNbTrys(); i++) {
             JPanel linePanel = new JPanel();
             linePanel.setLayout(new FlowLayout()); // Aligne les boutons de chaque ligne verticalement
-            for (int j = 0; j < nbHoleCombination; j++) {
+            for (int j = 0; j < model.getNbHoleCombination(); j++) {
                 JButton button = new JButton(new ImageIcon("mastermind/src/View/Images/circle.png"));
                 button.setName(String.valueOf(i) + " - " + String.valueOf(j));
                 button.setContentAreaFilled(false); // Supprime l'arrière-plan
@@ -47,17 +45,23 @@ public class GameScreen extends JFrame implements MasterMindObserver {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        JButton clicked = (JButton)e.getSource();
-                        if ((actualClickedColor[0].getIcon() != null) && Integer.parseInt(String.valueOf(clicked.getName().charAt(0))) == nbTrys - actualTry[0]) {
-                            clicked.setIcon(actualClickedColor[0].getIcon());
-                            controller.addColorInCombination(Color.valueOf(actualClickedColor[0].getName()), Integer.parseInt(String.valueOf(clicked.getName().charAt(clicked.getName().length()-1))));
+                        if (!controller.isRoundEnd()) {
+                            JButton clicked = (JButton)e.getSource();
+                            System.out.println("-------------------");
+                            System.out.println(Integer.parseInt(String.valueOf(clicked.getName().substring(0, 2)).trim()));
+                            System.out.println(model.getNbTrys() - model.getActualTry());
+                            System.out.println("--------------------");
+                            if ((actualClickedColor[0].getIcon() != null) && Integer.parseInt(String.valueOf(clicked.getName().substring(0, 2)).trim()) == model.getNbTrys() - model.getActualTry()) {
+                                clicked.setIcon(actualClickedColor[0].getIcon());
+                                controller.addColorInCombination(Color.valueOf(actualClickedColor[0].getName()), Integer.parseInt(String.valueOf(clicked.getName().charAt(clicked.getName().length()-1))));
+                            }
                         }
                     }
                 });
                 linePanel.add(button);
             }
 
-            int nbColumns = nbHoleCombination % 2 != 0 ? (nbHoleCombination/2 + 1) : (nbHoleCombination/2);
+            int nbColumns = model.getNbHoleCombination() % 2 != 0 ? (model.getNbHoleCombination()/2 + 1) : (model.getNbHoleCombination()/2);
 
             JPanel hintPanel = new JPanel(new GridLayout(2, nbColumns));
 
@@ -77,7 +81,7 @@ public class GameScreen extends JFrame implements MasterMindObserver {
                     nb++;
                 }
                 hintPanel.add(lineHintPanel);
-                if (nbHoleCombination % 2 != 0)
+                if (model.getNbHoleCombination() % 2 != 0)
                     minusButton = 1;
             }
 
@@ -86,7 +90,6 @@ public class GameScreen extends JFrame implements MasterMindObserver {
         }
         gamePanel.add(gameLinesPanel);
         mainPanel.add(gamePanel, BorderLayout.CENTER);
-
 
         JButton red = new JButton(new ImageIcon("mastermind/src/View/Images/red.png"));
         red.setName("RED");
@@ -159,8 +162,10 @@ public class GameScreen extends JFrame implements MasterMindObserver {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Récupère le bouton cliqué
-                    JButton clickedButton = (JButton) e.getSource();
-                    actualClickedColor[0] = clickedButton;
+                    if (!controller.isRoundEnd()){
+                        JButton clickedButton = (JButton) e.getSource();
+                        actualClickedColor[0] = clickedButton;
+                    }
                 }
             });
         }
@@ -168,7 +173,7 @@ public class GameScreen extends JFrame implements MasterMindObserver {
         JPanel colorsPanel = new JPanel(new GridBagLayout());
         JPanel colorsButtonPanel = new JPanel();
         colorsButtonPanel.setLayout(new BoxLayout(colorsButtonPanel, BoxLayout.PAGE_AXIS));
-        for (int i = 0; i < nbColors; i++) {
+        for (int i = 0; i < model.getNbColor(); i++) {
             colorsButtonPanel.add(buttonColorsList.get(i));
         }
 
@@ -188,36 +193,20 @@ public class GameScreen extends JFrame implements MasterMindObserver {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                int[] hint = controller.submitTry();
-                
-                int i;
-                for (i = 0; i < hint[0]; i++) {
-                    JButton jButton = hintButtonsList[nbTrys - actualTry[0]][i];
-                    jButton.setIcon(new ImageIcon("mastermind/src/View/Images/circle_good_position.png"));
+                if (!controller.isRoundEnd()) {
+                    if (model.getPlayerCombination().isValid()) {
+                        controller.submitTry();
+                    }
                 }
-                for (int j = i; j < hint[1] + i; j++) {
-                    JButton jButton = hintButtonsList[nbTrys - actualTry[0]][j];
-                    jButton.setIcon(new ImageIcon("mastermind/src/View/Images/circle_good_color.png"));
-                }
-
-
-                if (actualTry[0] == nbTrys || hint[0] == nbHoleCombination) {
-                    nextRound.setVisible(true);
-                    controller.endRound(hint);
-                } else {
-                    actualTry[0] += 1;
-                }
-
 
             }
         });
 
         nextRound.setText("Prochaine manche");
-        nextRound.setVisible(false);
         nextRound.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.startGame();
+                controller.endRound();
                 GameScreen.this.dispose();
             }
         });
@@ -234,8 +223,26 @@ public class GameScreen extends JFrame implements MasterMindObserver {
     }
 
     @Override
-    public void updateCombination(Model.Color color, int index) {
+    public void updateHint(Hint hint) {
+        if (hint.isHintSuccessArray()) {
+            for (int i = 0; i < hint.getSize(); i++) {
+                HintSuccess hintSuccess = hint.getValueAtPosition(i);
+                switch (hintSuccess) {
+                    case RightPositionColor ->  hintButtonsList[model.getNbTrys() - model.getActualTry()][i].setIcon(new ImageIcon("mastermind/src/View/Images/circle_good_position.png"));
+                    case RightColor -> hintButtonsList[model.getNbTrys() - model.getActualTry()][i].setIcon(new ImageIcon("mastermind/src/View/Images/circle_good_color.png"));
+                }
+            }
+        } else {
+            hintButtonsList[model.getNbTrys() - model.getActualTry()][0].setIcon(null);
+            hintButtonsList[model.getNbTrys() - model.getActualTry()][0].setText(String.valueOf(hint.getCorrectColorsAtCorrectPositions()));
+
+            int i = model.getNbHoleCombination() / 2;
+            if (model.getNbHoleCombination() % 2 != 0)
+                i ++;
+
+            hintButtonsList[model.getNbTrys() - model.getActualTry()][i].setIcon(null);
+            hintButtonsList[model.getNbTrys() - model.getActualTry()][i].setText(String.valueOf(hint.getCorrectColorsAtBadPositions()));
+        }
 
     }
-
 }

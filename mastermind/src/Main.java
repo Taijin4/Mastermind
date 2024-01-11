@@ -30,6 +30,7 @@ public class Main {
         joueur.printCombination();
         game.submitCombination(joueur);*/
 
+
         new StartScreen();
 //        MastermindGame model = new MastermindGame(12, 6);
 //        MastermindController controller = new MastermindController(model);
