@@ -15,7 +15,7 @@ public class StartScreen extends JFrame {
 
     public StartScreen() {
         super("Start");
-        setSize(400, 1000);
+        setSize(1000, 1050);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(0, 180, 216));

@@ -8,9 +8,9 @@ public class EndScreen extends JFrame {
 	public EndScreen(int score) {
 		setTitle("Score");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(810, 1000));
+		setSize(new Dimension(1000, 1050));
 		setVisible(true);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setLocationRelativeTo(null);
 
 		String text =  String.valueOf(score);
 
