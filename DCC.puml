@@ -10,14 +10,18 @@ package Model {
     class MastermindGame {
         - secretCombination : Combination
         - nbRounds : Integer
+        - nbColor : Integer
         - nbTrys : Integer
         - nbHoleCombination : Integer
         - playerCombination : Combination
-        - _observers : List<MasterMindObserver>
+        - hintStrategy : ShowHintStrategy
         - score : Integer
+        - actualTry : Integer
+        - lastHint : Hint
+        - observers : List<MasterMindObserver>
 
-        + MastermindGame(nbColor :Integer, nbRounds : Integer, nbHoleCombination : Integer)
-        + addObserver(observer : MasterMindObserver)
+        + <<create>> MastermindGame(nbColor :Integer, nbRounds : Integer, nbHoleCombination : Integer, nbTrys : Integer)
+        + setHintStrategy(hintStrategy : ShowHintStrategy)
         + getNbColor() : Integer
         + getNbTrys() : Integer
         + getNbRounds() : Integer
@@ -27,34 +31,47 @@ package Model {
         + setSecretCombination()
         + addToScore(roundScore : Integer)
         + getScore() : Integer
+        + getActualTry() : Integer
+        + resetActualTry()
+        + submitTry()
+        + addObserver(observer : MasterMindGameObserver)
+        + getLastHint() : Hint
+        + getHintStrategy() : ShowHintStrategy
+        + resetLastHint()
     }
 
     class Combination {
-        - colors: Color[]
+        - colors: List<Color>
         + <<create>> Combination(nbColors : Integer)
         + <<create>> Combination(combination : Combination)
         + getColorAtPosition(position: Integer) : Color
         + setColorAtPostion(color : Color, position : Integer)
-        + addCombination(color : Color)
         + containsColor(color : Color) : Boolean
         + size() : Integer
         + removeAtPosition(i : Integer)
+        + replaceAtPosition(i : Integer)
         + removeColor(color : Color)
         + printCombination()
         + generateSecreteCombination()
+        + generateSecreteCombinationOneTimeColor()
         + isValid() : Boolean
         + verifyCombination(secret : Combination) : Hint
         + resetCombination()
     }
 
     class Hint {
-        - correctPositions : Integer
-        - correctColors : Integer
         - hint : ArrayList<HintSuccess>
+        - hintNumbers : ArrayList<Integer>
+        - hintSuccessArray : Boolean
         + <<create>> Hint(correctPositions : Integer, correctColors : Integer)
-        + <<create>> Hint()
-        + getCorrectPositions(): Integer
-        + getCorrectColors(): Integer
+        + <<create>> Hint(size : Integer)
+        + getCorrectColorsAtCorrectPositions(): Integer
+        + getCorrectColorsAtBadPositions(): Integer
+        + setValueAtPosition(value : HintSuccess, i : Integer)
+        + getValueAtPosition(i : Integer) : HintSuccess
+        + getSize() : Integer
+        + printHint()
+        + isHintSUccessArray() : Boolean
     }
 
     enum Colors <<enum>> {
