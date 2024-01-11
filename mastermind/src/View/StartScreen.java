@@ -184,7 +184,6 @@ public class StartScreen extends JFrame {
         });
 
         buttonPlay.addActionListener( actionEvent -> {
-//            System.out.println("Slide colors : " + slideColorsNumber.getValue() + ", Slide rounds : " + slideRounds.getValue() + ", Slide hole number : " + slideHoleNumber.getValue());
             MastermindGame model = new MastermindGame(slideColorsNumber.getValue(), slideRounds.getValue(), slideHoleNumber.getValue(), slideAttempts.getValue());
             MastermindController controller = new MastermindController(model, slider.getValue());
             controller.startGame();
