@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.Font;
 import java.io.IOException;
 
-
 public class StartScreen extends JFrame {
 
     public StartScreen() {
@@ -21,7 +20,7 @@ public class StartScreen extends JFrame {
         panel.setBackground(new Color(0, 180, 216));
 
         Font customFont = new Font("Helvetica", Font.BOLD, 16);
-        Color customTextColor = new Color(0xCA, 0xF0, 0xF8); // Couleur bleu clair (CAF0F8 en hexadécimal)
+        Color customTextColor = new Color(0xCA, 0xF0, 0xF8);
         UIManager.put("Label.font", customFont);
         UIManager.put("Label.foreground", customTextColor);
         UIManager.put("Button.font", customFont);
@@ -42,7 +41,6 @@ public class StartScreen extends JFrame {
         UIManager.put("CheckBox.font", customFont);
         UIManager.put("CheckBox.foreground", customTextColor);
 
-
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.CENTER;
@@ -50,71 +48,28 @@ public class StartScreen extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
 
-        // Charger et redimensionner l'image
         ImageIcon originalIcon = new ImageIcon("mastermind/src/View/Images/logo.png");
         Image image = originalIcon.getImage();
         Image newimg = image.getScaledInstance(500, 300, Image.SCALE_DEFAULT);
         ImageIcon icon = new ImageIcon(newimg);
 
-        JButton buttonStart = new JButton("Commencer");
-        JButton buttonLeave = new JButton("Quitter");
+        JButton buttonStart = createStyledButton("Commencer");
+        JButton buttonLeave = createStyledButton("Quitter");
 
         JLabel labelRounds = new JLabel("Nombre de manches");
+        JSlider slideRounds = createStyledSlider(1, 5, 3);
 
-        JSlider slideRounds = new JSlider();
-        slideRounds.setBackground(new Color(0, 180, 216));
-        slideRounds.setMaximum(5);
-        slideRounds.setMinimum(1);
-        slideRounds.setValue(3);
-        slideRounds.setPaintTicks(true);
-        slideRounds.setPaintLabels(true);
-        slideRounds.setMinorTickSpacing(1);
-        slideRounds.setMajorTickSpacing(1);
-
-        JLabel labelColorsNumber = new JLabel("Nombre de pions disponible");
-
-        JSlider slideColorsNumber = new JSlider();
-        slideColorsNumber.setBackground(new Color(0, 180, 216));
-        slideColorsNumber.setMaximum(8);
-        slideColorsNumber.setMinimum(1);
-        slideColorsNumber.setValue(8);
-        slideColorsNumber.setPaintTicks(true);
-        slideColorsNumber.setPaintLabels(true);
-        slideColorsNumber.setMinorTickSpacing(1);
-        slideColorsNumber.setMajorTickSpacing(1);
+        JLabel labelColorsNumber = new JLabel("Nombre de pions disponibles");
+        JSlider slideColorsNumber = createStyledSlider(1, 8, 8);
 
         JLabel labelHoleNumber = new JLabel("Nombre de pions d'une combinaison");
-
-        JSlider slideHoleNumber = new JSlider();
-        slideHoleNumber.setBackground(new Color(0, 180, 216));
-        slideHoleNumber.setMaximum(6);
-        slideHoleNumber.setMinimum(1);
-        slideHoleNumber.setValue(4);
-        slideHoleNumber.setPaintTicks(true);
-        slideHoleNumber.setPaintLabels(true);
-        slideHoleNumber.setMinorTickSpacing(1);
-        slideHoleNumber.setMajorTickSpacing(1);
+        JSlider slideHoleNumber = createStyledSlider(1, 6, 4);
 
         JLabel labelAttempts = new JLabel("Nombre de tentatives");
-
-        JSlider slideAttempts = new JSlider();
-        slideAttempts.setBackground(new Color(0, 180, 216));
-        slideAttempts.setMaximum(12);
-        slideAttempts.setMinimum(1);
-        slideAttempts.setValue(10);
-        slideAttempts.setPaintTicks(true);
-        slideAttempts.setPaintLabels(true);
-        slideAttempts.setMinorTickSpacing(1);
-        slideAttempts.setMajorTickSpacing(1);
+        JSlider slideAttempts = createStyledSlider(1, 12, 10);
 
         JLabel labelDifficulty = new JLabel("Difficulté");
-
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 2, 1);
-        slider.setBackground(new Color(0, 180, 216));
-        slider.setPaintTicks(true);
-        slider.setPaintLabels(true);
-        slider.setMinorTickSpacing(1);
-        slider.setMajorTickSpacing(1);
+        JSlider slider = createStyledSlider(0, 2, 1);
 
         Dictionary<Integer, JLabel> labelTable = new Hashtable<>();
         labelTable.put(0, new JLabel("Facile"));
@@ -122,15 +77,14 @@ public class StartScreen extends JFrame {
         labelTable.put(2, new JLabel("Numérique"));
         slider.setLabelTable(labelTable);
 
-
-        JButton buttonBack = new JButton("Retour");
-        JButton buttonPlay = new JButton("Jouer");
+        JButton buttonBack = createStyledButton("Retour");
+        JButton buttonPlay = createStyledButton("Jouer");
 
         panel.add(new JLabel(icon), gbc);
         panel.add(buttonStart, gbc);
         panel.add(buttonLeave, gbc);
 
-        buttonStart.addActionListener( actionEvent  -> {
+        buttonStart.addActionListener(actionEvent -> {
             panel.removeAll();
             gbc.gridx = 0;
             gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -151,12 +105,10 @@ public class StartScreen extends JFrame {
             gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
 
-            // Bouton "Retour" à gauche
             gbc.gridx = 0;
             gbc.anchor = GridBagConstraints.WEST;
             panel.add(buttonBack, gbc);
 
-            // Bouton "Jouer" à droite
             gbc.gridx = 2;
             gbc.weightx = 0;
             gbc.anchor = GridBagConstraints.EAST;
@@ -171,11 +123,11 @@ public class StartScreen extends JFrame {
             panel.updateUI();
         });
 
-        buttonLeave.addActionListener( actionEvent  -> {
+        buttonLeave.addActionListener(actionEvent -> {
             System.exit(0);
         });
 
-        buttonBack.addActionListener( actionEvent ->{
+        buttonBack.addActionListener(actionEvent -> {
             panel.removeAll();
             panel.add(new JLabel(icon), gbc);
             panel.add(buttonStart, gbc);
@@ -183,7 +135,7 @@ public class StartScreen extends JFrame {
             panel.updateUI();
         });
 
-        buttonPlay.addActionListener( actionEvent -> {
+        buttonPlay.addActionListener(actionEvent -> {
             MastermindGame model = new MastermindGame(slideColorsNumber.getValue(), slideRounds.getValue(), slideHoleNumber.getValue(), slideAttempts.getValue());
             MastermindController controller = new MastermindController(model, slider.getValue());
             controller.startGame();
@@ -195,5 +147,22 @@ public class StartScreen extends JFrame {
         setVisible(true);
     }
 
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.PLAIN, 24));
+        button.setBackground(new Color(0xCA, 0xF0, 0xF8));
+        button.setFocusPainted(false);
+        button.setPreferredSize(new Dimension(200, 50)); // Largeur fixe
+        return button;
+    }
 
+    private JSlider createStyledSlider(int min, int max, int value) {
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, min, max, value);
+        slider.setBackground(new Color(0, 180, 216));
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        slider.setMinorTickSpacing(1);
+        slider.setMajorTickSpacing(1);
+        return slider;
+    }
 }
