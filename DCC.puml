@@ -1,4 +1,4 @@
- @startuml
+@startuml
 skinparam style strictuml
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
@@ -7,101 +7,153 @@ hide interface attributes
 
 package Model {
 
-    class MastermindGame {
-        - currentAttempts : Integer
-        - roundScore : Integer
-        + <<create>> MastermindGame(nbColors : Integer)
-        + verifyVictory(): Boolean
-        + verifyLoose(): Boolean
-        + getScore(): Integer
-        + setScore(score : Integer)
-        + submitPlayerCombination(guess : Combination)
-        + getCurrentAttempt(): Integer
-    }
+class MastermindGame {
+    - secretCombination : Combination
+    - nbRounds : Integer
+    - nbColor : Integer
+    - nbTrys : Integer
+    - nbHoleCombination : Integer
+    - playerCombination : Combination
+    - hintStrategy : ShowHintStrategy
+    - score : Integer
+    - actualTry : Integer
+    - lastHint : Hint
+    - observers : List<MastermindGameObserver>
 
-    class Combination {
-        - colors: Color[]
-        + <<create>> Combination(colors: Color[])
-        + <<create>> Combination()
-        + generateSecreteCombination(nbColors : Integer): Combination
-        + getColorAtPosition(position: Integer): Color
-    }
+    + <<create>> MastermindGame(nbColor : Integer, nbRounds : Integer, nbHoleCombination : Integer, nbTrys : Integer)
+    + setHintStrategy(hintStrategy : ShowHintStrategy)
+    + getNbColor() : Integer
+    + getNbTrys() : Integer
+    + getNbRounds() : Integer
+    + getNbHoleCombination() : Integer
+    + addColorInCombination(color : Color, index : Integer)
+    + getPlayerCombination() : Combination
+    + setSecretCombination()
+    + addToScore(roundScore : Integer)
+    + getScore() : Integer
+    + getActualTry() : Integer
+    + resetActualTry()
+    + submitTry()
+    + addObserver(observer : MastermindGameObserver)
+    + getLastHint() : Hint
+    + getHintStrategy() : ShowHintStrategy
+    + resetLastHint()
+}
 
-    class Hint {
-        + <<create>> Hint(success : HintSuccess[])
-        + generateCombinationHint(secret: Combination, guess: Combination): Hint
-        + verifyColors(): Integer
-        + verifyPositions(): Integer
-        + getCorrectPositions(): Integer
-        + getCorrectColors(): Integer
-    }
+class Combination {
+    - colors: List<Color>
+    + <<create>> Combination(nbColors : Integer)
+    + <<create>> Combination(combination : Combination)
+    + getColorAtPosition(position: Integer) : Color
+    + setColorAtPosition(color : Color, position : Integer)
+    + containsColor(color : Color) : Boolean
+    + size() : Integer
+    + removeAtPosition(i : Integer)
+    + replaceAtPosition(i : Integer)
+    + removeColor(color : Color)
+    + printCombination()
+    + generateSecretCombination(nbColor : Integer)
+    + generateSecretCombinationOneTimeColor()
+    + isValid() : Boolean
+    + verifyCombination(secret : Combination) : Hint
+    + resetCombination()
+}
 
-    enum Colors <<enum>> {
-        BLUE,
-        RED,
-        GREEN,
-        YELLOW,
-        ORANGE,
-        PURPLE,
-        GREY
-    }
+class Hint {
+    - hint : ArrayList<HintSuccess>
+    - hintNumbers : ArrayList<Integer>
+    - hintSuccessArray : Boolean
+    + <<create>> Hint(correctPositions : Integer, correctColors : Integer)
+    + <<create>> Hint(size : Integer)
+    + getCorrectColorsAtCorrectPositions(): Integer
+    + getCorrectColorsAtBadPositions(): Integer
+    + setValueAtPosition(value : HintSuccess, i : Integer)
+    + getValueAtPosition(i : Integer) : HintSuccess
+    + getSize() : Integer
+    + printHint()
+    + isHintSuccessArray() : Boolean
+}
 
-    enum HintSuccess <<enum>> {
-        RIGHTPOSITIONANDCOLOR,
-        RIGHTCOLOR,
-        FALSE
-    }
+enum Colors <<enum>> {
+    BLUE,
+    RED,
+    GREEN,
+    YELLOW,
+    ORANGE,
+    PURPLE,
+    GREY,
+    DEFAULT_COLOR
+}
 
-    interface MasterMindObserver <<interface>> {
-        + updatePositions(hint : Hint)
-        + updateColors(color : Integer)
-    }
+enum HintSuccess <<enum>> {
+    RightPositionColor,
+    RightColor,
+    False
+}
 
+interface ShowHintStrategy <<interface>> {
+    + submitTry(playerCombination : Combination, secretCombination : Combination) : Hint
+}
+
+class DigitalHint implements ShowHintStrategy {
+    + submitTry(playerCombination : Combination, secretCombination : Combination) : Hint
+}
+
+class EasyHint implements ShowHintStrategy {
+    + submitTry(playerCombination : Combination, secretCombination : Combination) : Hint
+}
+
+class ClassicHint implements ShowHintStrategy {
+    + submitTry(playerCombination : Combination, secretCombination : Combination) : Hint
+}
+
+interface MastermindGameObserver <<interface>> {
+    + updateHint(hint : Hint)
+}
 }
 
 package View {
 
-    class MastermindView {
-        + showStartScreen()
-        + showGameScreen()
-        + showEndScreen(score: Integer, isWin: Boolean)
-        + selectColorsForCombination(): Combination
-        + validateCombination() : Combination
-        + showHints(hint: Hint)
-        + resetCombination()
-    }
 
-    class MastermindSwingView implements MastermindView {
-        + showStartScreen()
-        + showGameScreen()
-        + showEndScreen(score: Integer, isWin: Boolean)
-        + selectColorsForCombination(): Combination
-        + validateCombination() : Combination
-        + showHints(hint: Hint)
-        + resetCombination()
-    }
+class StartScreen extends JFrame {
+    + <<create>> StartScreen()
+}
 
+class EndScreen extends JFrame {
+    + <<create>> EndScreen(score: Integer)
+}
+
+class GameScreen extends JFrame implements Model.MastermindGameObserver {
+    + <<create>> GameScreen(controller: MastermindController, model: MastermindGame)
+    + updateHint(hint: Hint)
+}
 }
 
 package Controller {
 
-    class MastermindController {
-        - game : MastermindGame
-        - view : MastermindView
-        + <<create>> MastermindController(game: MastermindGame, view: MastermindView)
-        + startGame(nbRounds : Integer)
-        + startRound() : Integer
-        + makeGuess(combination: Combination)
-        + resetGame()
-    }
 
+class MastermindController {
+    - model : MastermindGame
+    - actualRound : Integer
+    + <<create>> MastermindController(model : MastermindGame, hintStrategy : Integer)
+    + startGame()
+    + endGame()
+    + startRound() : Integer
+    + endRound()
+    + addColorInCombination(color : Color, index : Integer)
+    + submitTry()
+    + isRoundEnd() : boolean
+}
 }
 
 MastermindGame --> "1\n -secretCombination" Combination : uses
-MastermindGame --> "1\n -playerAttempt" Combination : uses
-MastermindController --> MastermindGame : controls
-MastermindController --> MastermindView : displays
-Combination --> "*\n -colors" Colors : consists of
+MastermindGame --> "1\n -playerCombination" Combination : uses
+MastermindGame --> "*" Model.MastermindGameObserver : notifies
+MastermindGame ..> ShowHintStrategy : uses
+Combination --> "\n -colors" Colors : consists of
 Hint --> "*\n -hintSuccess" HintSuccess : determines >
-MastermindGame ..> Hint : uses >
+MastermindController --> MastermindGame : controls
+GameScreen --> MastermindGame : observes
+StartScreen -down-> MastermindController : uses >
+EndScreen -down- MastermindGame : displays >
 @enduml

@@ -1,7 +1,9 @@
+import Controller.MastermindController;
 import Model.Color;
 import Model.Combination;
 import Model.Hint;
 import Model.MastermindGame;
+import View.EndScreen;
 import View.GameScreen;
 import View.StartScreen;
 
@@ -28,7 +30,11 @@ public class Main {
         joueur.printCombination();
         game.submitCombination(joueur);*/
 
-        new StartScreen();
 
+        new StartScreen();
+//        MastermindGame model = new MastermindGame(12, 6);
+//        MastermindController controller = new MastermindController(model);
+//        new GameScreen(controller, 6, 6, 12);
+//            new EndScreen(5);
     }
 }

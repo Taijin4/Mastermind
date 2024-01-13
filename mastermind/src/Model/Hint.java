@@ -3,50 +3,73 @@ package Model;
 import java.util.ArrayList;
 
 public class Hint {
-    private int correctPositions;
-    private int correctColors;
-    private ArrayList<HintSuccess> hint = new ArrayList<>();
+    private ArrayList<HintSuccess> hint;
+    private ArrayList<Integer> hintNumbers = new ArrayList<Integer>(2);
+    private boolean hintSuccessArray = false;
 
-    
-    public Hint(int positionCorrecte, int couleurCorrecte){
-        this.correctPositions = positionCorrecte;
-        this.correctColors = couleurCorrecte;
+    public Hint(int correctColorsAtCorrectPositions, int correctColorsAtBadPositions){
+        hintNumbers.add(correctColorsAtCorrectPositions);
+        hintNumbers.add(correctColorsAtBadPositions);
     }
 
-    public Hint() {
-
-    }
-
-    public int getCorrectPositions(){
-        return this.correctPositions;
-    }
-
-    public int getCorrectColors(){
-        return this.correctColors;
-    }
-
-    public Hint generateCombinationHint(Combination guess, Combination secret){
-        int correctColors=0;
-        int correctPositions=0;
-
-        Combination copyGuess = guess;
-
-        for(int i = 0; i < copyGuess.size(); i++){
-            if(secret.getColorAtPosition(i)==guess.getColorAtPosition(i)) {
-                correctPositions++;
-                copyGuess.removeAtPosition(i);
-            }
+    public Hint(int size) {
+        this.hint = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            this.hint.add(i, HintSuccess.False);
         }
-        for(int j = 0 ; j < copyGuess.size() ; j++){
-            if(secret.containsColor(guess.getColorAtPosition(j))){
-                correctColors++;
-                //Potentiellement rajouter un remove si ca marche pas
+        hintSuccessArray = true;
+    }
+
+    public int getCorrectColorsAtCorrectPositions(){
+        int val = 0;
+        if (hintSuccessArray) {
+            for (int i = 0; i < hint.size(); i++) {
+                if (hint.get(i) == HintSuccess.RightPositionColor)
+                    val ++;
             }
+        } else {
+            val = this.hintNumbers.get(0);
         }
 
-        Hint hint = new Hint(correctPositions, correctColors);
+        return val;
+    }
 
-        return hint;
+    public int getCorrectColorsAtBadPositions(){
+        int val = 0;
+        if (hintSuccessArray) {
+            for (int i = 0; i < hint.size(); i++) {
+                if (hint.get(i) == HintSuccess.RightColor)
+                    val ++;
+            }
+        } else {
+            val = this.hintNumbers.get(1);
+        }
+
+        return val;
+    }
+
+    public void setValueAtPosition(HintSuccess value, int i) {
+        hint.set(i, value);
+    }
+
+    public HintSuccess getValueAtPosition(int i) {
+        return this.hint.get(i);
+    }
+
+    public int getSize() {
+        return this.hint.size();
+    }
+
+    public void printHint() {
+        String fi = "";
+        for (int i = 0; i < this.hint.size(); i++) {
+            fi += this.hint.get(i) + " - ";
+        }
+        System.out.println(fi);
+    }
+
+    public boolean isHintSuccessArray() {
+        return hintSuccessArray;
     }
 
 }

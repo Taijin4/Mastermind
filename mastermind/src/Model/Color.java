@@ -8,5 +8,6 @@ public enum Color {
     ORANGE,
     PURPLE,
     PINK,
-    GRAY
+    GRAY,
+    DEFAULT_COLOR
 }
