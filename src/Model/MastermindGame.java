@@ -82,6 +82,7 @@ public class MastermindGame {
         }
         actualTry ++;
         lastHint = hint;
+        System.out.println("Submit");
     }
 
     public void addObserver(MastermindGameObserver observer) { observers.add(observer); }

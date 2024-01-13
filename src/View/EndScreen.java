@@ -70,7 +70,7 @@ public class EndScreen extends JFrame {
 	private JButton createStyledButton(String text) {
 		JButton button = new JButton(text);
 		button.setFont(new Font("Arial", Font.PLAIN, 24));
-		button.setBackground(new Color(0xCA, 0xF0, 0xF8));
+		button.setBackground(new Color(0xCA, 0xF0, 0xF8)); // Couleur bleu clair (CAF0F8 en hexadécimal)
 		button.setFocusPainted(false);
 		return button;
 	}

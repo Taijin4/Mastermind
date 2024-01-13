@@ -14,14 +14,10 @@ public class StartScreen extends JFrame {
 
     public StartScreen() {
         super("Start");
-        setSize(1000, 800);
+        setSize(1000, 1050);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(0, 180, 216));
-
-        JScrollPane scrollPane = new JScrollPane(panel);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        setContentPane(scrollPane);
 
         Font customFont = new Font("Helvetica", Font.BOLD, 16);
         Color customTextColor = new Color(0xCA, 0xF0, 0xF8);
@@ -48,11 +44,11 @@ public class StartScreen extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(3, 3, 3, 3);
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
 
-        ImageIcon originalIcon = new ImageIcon("mastermind/src/View/logo.png");
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("Images/logo.png"));
         Image image = originalIcon.getImage();
         Image newimg = image.getScaledInstance(500, 300, Image.SCALE_DEFAULT);
         ImageIcon icon = new ImageIcon(newimg);
@@ -120,7 +116,7 @@ public class StartScreen extends JFrame {
 
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.anchor = GridBagConstraints.CENTER;
-            gbc.insets = new Insets(3, 3, 3, 3);
+            gbc.insets = new Insets(10, 10, 10, 10);
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.weightx = 1.0;
 

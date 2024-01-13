@@ -55,6 +55,7 @@ public class Combination {
         for (int i = 0; i < colors.size(); i++) {
             answer += colors.get(i) + " - ";
         }
+        System.out.println(answer);
     }
 
     public void generateSecretCombination(int nbColor){
@@ -121,7 +122,6 @@ public class Combination {
             copyGuess.replaceAtPosition(i);
             secretCopy.removeAtPosition(i);
         }
-
 
         for(int j = 0 ; j < copyGuess.size() ; j++){
             if(secretCopy.containsColor(this.getColorAtPosition(j))){

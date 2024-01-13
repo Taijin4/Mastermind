@@ -17,10 +17,10 @@ public class GameScreen extends JFrame implements MastermindGameObserver {
     public GameScreen(MastermindController controller, MastermindGame model) {
         setTitle("Mastermind");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 800);
+        setSize(1000, 1050);
         setLocationRelativeTo(null);
         setVisible(true);
-
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         this.model = model;
 
@@ -30,11 +30,6 @@ public class GameScreen extends JFrame implements MastermindGameObserver {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new java.awt.Color(0, 180, 216));
 
-        JScrollPane scrollPane = new JScrollPane(mainPanel);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        setContentPane(scrollPane);
-
-
         JPanel gamePanel = new JPanel(new GridLayout(1, 2));
         gamePanel.setBackground(new java.awt.Color(0, 180, 216));
         JPanel gameLinesPanel = new JPanel(new GridLayout(model.getNbTrys(), 1));
@@ -43,23 +38,19 @@ public class GameScreen extends JFrame implements MastermindGameObserver {
         for (int i = 0; i < model.getNbTrys(); i++) {
             JPanel linePanel = new JPanel();
             linePanel.setBackground(new java.awt.Color(0, 180, 216));
-            linePanel.setLayout(new FlowLayout());
+            linePanel.setLayout(new FlowLayout()); // Aligne les boutons de chaque ligne verticalement
             for (int j = 0; j < model.getNbHoleCombination(); j++) {
-                JButton button = new JButton(new ImageIcon("Images/circle.png"));
+                JButton button = new JButton(new ImageIcon(getClass().getResource("Images/circle.png")));
                 button.setName(String.valueOf(i) + " - " + String.valueOf(j));
-                button.setContentAreaFilled(false);
-                button.setBorderPainted(false);
-                button.setFocusPainted(false);
+                button.setContentAreaFilled(false); // Supprime l'arrière-plan
+                button.setBorderPainted(false); // Supprime la bordure
+                button.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
                 button.setOpaque(false);
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (!controller.isRoundEnd()) {
                             JButton clicked = (JButton) e.getSource();
-                            System.out.println("-------------------");
-                            System.out.println(Integer.parseInt(String.valueOf(clicked.getName().substring(0, 2)).trim()));
-                            System.out.println(model.getNbTrys() - model.getActualTry());
-                            System.out.println("--------------------");
                             if ((actualClickedColor[0].getIcon() != null) && Integer.parseInt(String.valueOf(clicked.getName().substring(0, 2)).trim()) == model.getNbTrys() - model.getActualTry()) {
                                 clicked.setIcon(actualClickedColor[0].getIcon());
                                 controller.addColorInCombination(Model.Color.valueOf(actualClickedColor[0].getName()), Integer.parseInt(String.valueOf(clicked.getName().charAt(clicked.getName().length() - 1))));
@@ -81,10 +72,10 @@ public class GameScreen extends JFrame implements MastermindGameObserver {
                 lineHintPanel.setBackground(new java.awt.Color(0, 180, 216));
                 lineHintPanel.setLayout(new FlowLayout());
                 for (int k = 0; k < nbColumns - minusButton; k++) {
-                    JButton button = new JButton(new ImageIcon("Images/little_circle.png"));
-                    button.setContentAreaFilled(false);
-                    button.setBorderPainted(false);
-                    button.setFocusPainted(false);
+                    JButton button = new JButton(new ImageIcon(getClass().getResource("Images/little_circle.png")));
+                    button.setContentAreaFilled(false); // Supprime l'arrière-plan
+                    button.setBorderPainted(false); // Supprime la bordure
+                    button.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
                     button.setOpaque(false);
                     lineHintPanel.add(button);
                     hintButtonsList[i][nb] = button;
@@ -101,60 +92,60 @@ public class GameScreen extends JFrame implements MastermindGameObserver {
         gamePanel.add(gameLinesPanel);
         mainPanel.add(gamePanel, BorderLayout.CENTER);
 
-        JButton red = new JButton(new ImageIcon("Images/red.png"));
+        JButton red = new JButton(new ImageIcon(getClass().getResource("Images/red.png")));
         red.setName("RED");
-        red.setContentAreaFilled(false);
-        red.setBorderPainted(false);
-        red.setFocusPainted(false);
+        red.setContentAreaFilled(false); // Supprime l'arrière-plan
+        red.setBorderPainted(false); // Supprime la bordure
+        red.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         red.setOpaque(false);
 
-        JButton blue = new JButton(new ImageIcon("Images/blue.png"));
+        JButton blue = new JButton(new ImageIcon(getClass().getResource("Images/blue.png")));
         blue.setName("BLUE");
-        blue.setContentAreaFilled(false);
-        blue.setBorderPainted(false);
-        blue.setFocusPainted(false);
+        blue.setContentAreaFilled(false); // Supprime l'arrière-plan
+        blue.setBorderPainted(false); // Supprime la bordure
+        blue.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         blue.setOpaque(false);
 
-        JButton green = new JButton(new ImageIcon("Images/green.png"));
+        JButton green = new JButton(new ImageIcon(getClass().getResource("Images/green.png")));
         green.setName("GREEN");
-        green.setContentAreaFilled(false);
-        green.setBorderPainted(false);
-        green.setFocusPainted(false);
+        green.setContentAreaFilled(false); // Supprime l'arrière-plan
+        green.setBorderPainted(false); // Supprime la bordure
+        green.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         green.setOpaque(false);
 
-        JButton orange = new JButton(new ImageIcon("Images/orange.png"));
+        JButton orange = new JButton(new ImageIcon(getClass().getResource("Images/orange.png")));
         orange.setName("ORANGE");
-        orange.setContentAreaFilled(false);
-        orange.setBorderPainted(false);
-        orange.setFocusPainted(false);
+        orange.setContentAreaFilled(false); // Supprime l'arrière-plan
+        orange.setBorderPainted(false); // Supprime la bordure
+        orange.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         orange.setOpaque(false);
 
-        JButton yellow = new JButton(new ImageIcon("Images/yellow.png"));
+        JButton yellow = new JButton(new ImageIcon(getClass().getResource("Images/yellow.png")));
         yellow.setName("YELLOW");
-        yellow.setContentAreaFilled(false);
-        yellow.setBorderPainted(false);
-        yellow.setFocusPainted(false);
+        yellow.setContentAreaFilled(false); // Supprime l'arrière-plan
+        yellow.setBorderPainted(false); // Supprime la bordure
+        yellow.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         yellow.setOpaque(false);
 
-        JButton pink = new JButton(new ImageIcon("Images/pink.png"));
+        JButton pink = new JButton(new ImageIcon(getClass().getResource("Images/pink.png")));
         pink.setName("PINK");
-        pink.setContentAreaFilled(false);
-        pink.setBorderPainted(false);
-        pink.setFocusPainted(false);
+        pink.setContentAreaFilled(false); // Supprime l'arrière-plan
+        pink.setBorderPainted(false); // Supprime la bordure
+        pink.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         pink.setOpaque(false);
 
-        JButton purple = new JButton(new ImageIcon("Images/purple.png"));
+        JButton purple = new JButton(new ImageIcon(getClass().getResource("Images/purple.png")));
         purple.setName("PURPLE");
-        purple.setContentAreaFilled(false);
-        purple.setBorderPainted(false);
-        purple.setFocusPainted(false);
+        purple.setContentAreaFilled(false); // Supprime l'arrière-plan
+        purple.setBorderPainted(false); // Supprime la bordure
+        purple.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         purple.setOpaque(false);
 
-        JButton gray = new JButton(new ImageIcon("Images/gray.png"));
+        JButton gray = new JButton(new ImageIcon(getClass().getResource("Images/gray.png")));
         gray.setName("GRAY");
-        gray.setContentAreaFilled(false);
-        gray.setBorderPainted(false);
-        gray.setFocusPainted(false);
+        gray.setContentAreaFilled(false); // Supprime l'arrière-plan
+        gray.setBorderPainted(false); // Supprime la bordure
+        gray.setFocusPainted(false); // Supprime la mise en évidence lorsqu'il est sélectionné
         gray.setOpaque(false);
 
         List<JButton> buttonColorsList = new ArrayList<JButton>();
@@ -197,6 +188,7 @@ public class GameScreen extends JFrame implements MastermindGameObserver {
 
         mainPanel.add(colorsPanel, BorderLayout.WEST);
 
+        // Utilisation de Box pour disposer les boutons verticalement avec une marge
         Box buttonBox = Box.createVerticalBox();
         JButton nextTurn = new JButton("Valider la tentative");
         nextTurn.addActionListener(new ActionListener() {
@@ -219,7 +211,7 @@ public class GameScreen extends JFrame implements MastermindGameObserver {
         });
 
         buttonBox.add(nextTurn);
-        buttonBox.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonBox.add(Box.createRigidArea(new Dimension(0, 10))); // Ajoute une marge de 10 pixels
         buttonBox.add(nextRound);
 
         JPanel rightPanel = new JPanel(new BorderLayout());
@@ -231,14 +223,14 @@ public class GameScreen extends JFrame implements MastermindGameObserver {
         centeringPanel.add(buttonBox);
         rightPanel.add(centeringPanel, BorderLayout.NORTH);
 
-        mainPanel.add(rightPanel, BorderLayout.SOUTH);
+        mainPanel.add(rightPanel, BorderLayout.SOUTH); // Placer les boutons en bas
 
         setContentPane(mainPanel);
-        revalidate();
+        revalidate(); // Force la mise à jour de la disposition des composants
         repaint();
 
         Font customFont = new Font("Helvetica", Font.BOLD, 16);
-        java.awt.Color customTextColor = new java.awt.Color(0xCA, 0xF0, 0xF8);
+        java.awt.Color customTextColor = new java.awt.Color(0xCA, 0xF0, 0xF8); // Couleur bleu clair (CAF0F8 en hexadécimal)
         UIManager.put("Label.font", customFont);
         UIManager.put("Label.foreground", customTextColor);
         UIManager.put("Button.font", customFont);
@@ -266,8 +258,8 @@ public class GameScreen extends JFrame implements MastermindGameObserver {
             for (int i = 0; i < hint.getSize(); i++) {
                 HintSuccess hintSuccess = hint.getValueAtPosition(i);
                 switch (hintSuccess) {
-                    case RightPositionColor -> hintButtonsList[model.getNbTrys() - model.getActualTry()][i].setIcon(new ImageIcon("Images/circle_good_position.png"));
-                    case RightColor -> hintButtonsList[model.getNbTrys() - model.getActualTry()][i].setIcon(new ImageIcon("Images/circle_good_color.png"));
+                    case RightPositionColor -> hintButtonsList[model.getNbTrys() - model.getActualTry()][i].setIcon(new ImageIcon(getClass().getResource("Images/circle_good_position.png")));
+                    case RightColor -> hintButtonsList[model.getNbTrys() - model.getActualTry()][i].setIcon(new ImageIcon(getClass().getResource("Images/circle_good_color.png")));
                 }
             }
         } else {
